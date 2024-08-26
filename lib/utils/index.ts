@@ -1,1 +1,1 @@
-export * as StringUtils from "./string";
+export * as ColorUtils from "./color";

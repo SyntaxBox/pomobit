@@ -5,7 +5,7 @@ export function isHexColor(color: string): boolean {
   return hexColorRegex.test(color);
 }
 
-export function generateColorPalette(hexColor: string): Record<string, string> {
+export function generateColorPalette(hexColor: string) {
   // Convert hex to RGB and then to HSV
   const hsv = rgbToHsv(hexToRgb(hexColor));
 
@@ -20,7 +20,7 @@ export function generateColorPalette(hexColor: string): Record<string, string> {
     background: adjustHue(0, 0.1, 0.95),
     light1: adjustHue(0, 0.3, 0.9),
     light2: adjustHue(0, 0.5, 0.8),
-  };
+  } as const;
 }
 
 export function hexToRgb(hex: string): [number, number, number] {

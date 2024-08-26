@@ -62,7 +62,7 @@ export function rgbToHsv([r, g, b]: [number, number, number]): [
   return [h, max === 0 ? 0 : diff / max, max];
 }
 
-function hsvToRgb([h, s, v]: [number, number, number]): [
+export function hsvToRgb([h, s, v]: [number, number, number]): [
   number,
   number,
   number,
@@ -89,6 +89,6 @@ function hsvToRgb([h, s, v]: [number, number, number]): [
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-function rgbToHex([r, g, b]: [number, number, number]): string {
+export function rgbToHex([r, g, b]: [number, number, number]): string {
   return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
 }

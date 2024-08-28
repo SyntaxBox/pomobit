@@ -20,7 +20,7 @@ export function Button({
       style={{
         color: pallet.text1,
         fill: pallet.text1,
-        backgroundColor: `${pallet.primary1}${hover ? "80" : "70"}`,
+        backgroundColor: `${pallet.primary1}${hover ? "90" : "60"}`,
         ...style,
       }}
       onMouseEnter={() => setHover(true)}

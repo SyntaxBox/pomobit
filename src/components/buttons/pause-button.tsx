@@ -26,8 +26,17 @@ export function PauseButton({
   }, []);
 
   return (
-    <Button pallet={pallet ?? workPallet} {...rest} onClick={handleClick}>
-      {isPaused ? <Pause /> : <Triangle />}
+    <Button
+      className="w-10 h-10 p-0"
+      pallet={pallet ?? workPallet}
+      {...rest}
+      onClick={handleClick}
+    >
+      {isPaused ? (
+        <Pause fill="current" className="w-5" />
+      ) : (
+        <Triangle className="w-4 rotate-90" fill="current" />
+      )}
     </Button>
   );
 }

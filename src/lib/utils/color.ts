@@ -5,6 +5,7 @@ export function isHexColor(color: string): boolean {
   return hexColorRegex.test(color);
 }
 
+export type ColorPallet = typeof generateColorPalette;
 export function generateColorPalette(hexColor: string) {
   // Convert hex to RGB and then to HSV
   const hsv = rgbToHsv(hexToRgb(hexColor));

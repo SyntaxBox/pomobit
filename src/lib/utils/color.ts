@@ -1,51 +1,55 @@
-export function isHexColor(color: string): boolean {
-  // Regular expression to match valid hex color formats
-  const hexColorRegex = /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
-
-  return hexColorRegex.test(color);
-}
-
 export type ColorPallet = ReturnType<typeof generateColorPalette>;
-export function generateColorPalette(hexColor: string) {
-  // Convert hex to RGB and then to HSV
-  const hsv = rgbToHsv(hexToRgb(hexColor));
+export function generateColorPalette(hexColor: string): Record<string, string> {
+  // Convert hex to RGB
+  const rgb = hexToRgb(hexColor);
 
-  // Helper function to generate color variations
-  const adjustHue = (hueOffset: number, saturation: number, value: number) =>
-    rgbToHex(hsvToRgb([(hsv[0] + hueOffset) % 1, saturation, value]));
+  // Convert RGB to HSV
+  const hsv = rgbToHsv(rgb);
+
+  // Generate colors
+  const primary1 = rgbToHex(hsvToRgb(hsv));
+  const primary2 = rgbToHex(hsvToRgb([(hsv[0] + 0.1) % 1, hsv[1], hsv[2]]));
+  const secondary = rgbToHex(hsvToRgb([(hsv[0] + 0.5) % 1, hsv[1], hsv[2]]));
+  const background = rgbToHex(hsvToRgb([hsv[0], 0.1, 0.95]));
+  const light1 = rgbToHex(hsvToRgb([hsv[0], 0.3, 0.9]));
+  const light2 = rgbToHex(hsvToRgb([hsv[0], 0.5, 0.8]));
+
+  // Generate text colors
+  const text1 = rgbToHex(hsvToRgb([hsv[0], 0.8, 0.2]));
+  const text2 = rgbToHex(hsvToRgb([hsv[0], 0.6, 0.4]));
 
   return {
-    primary1: rgbToHex(hsvToRgb(hsv)),
-    primary2: adjustHue(0.1, hsv[1], hsv[2]),
-    secondary: adjustHue(0.5, hsv[1], hsv[2]),
-    background: adjustHue(0, 0.1, 0.95),
-    light1: adjustHue(0, 0.3, 0.9),
-    light2: adjustHue(0, 0.5, 0.8),
-  } as const;
+    primary1,
+    primary2,
+    secondary,
+    background,
+    light1,
+    light2,
+    text1,
+    text2,
+  };
 }
 
 export function hexToRgb(hex: string): [number, number, number] {
-  return [
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16),
-  ];
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return [r, g, b];
 }
 
-export function rgbToHsv([r, g, b]: [number, number, number]): [
-  number,
-  number,
-  number,
-] {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const max = Math.max(r, g, b),
-    min = Math.min(r, g, b);
+export function rgbToHsv(
+  rgb: [number, number, number],
+): [number, number, number] {
+  const [r, g, b] = rgb.map((x) => x / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
   const diff = max - min;
 
   let h = 0;
-  if (diff !== 0) {
+  const s = max === 0 ? 0 : diff / max;
+  const v = max;
+
+  if (max !== min) {
     switch (max) {
       case r:
         h = (g - b) / diff + (g < b ? 6 : 0);
@@ -60,36 +64,52 @@ export function rgbToHsv([r, g, b]: [number, number, number]): [
     h /= 6;
   }
 
-  return [h, max === 0 ? 0 : diff / max, max];
+  return [h, s, v];
 }
 
-export function hsvToRgb([h, s, v]: [number, number, number]): [
-  number,
-  number,
-  number,
-] {
+export function hsvToRgb(
+  hsv: [number, number, number],
+): [number, number, number] {
+  const [h, s, v] = hsv;
+  let r = 0,
+    g = 0,
+    b = 0;
+
   const i = Math.floor(h * 6);
   const f = h * 6 - i;
   const p = v * (1 - s);
   const q = v * (1 - f * s);
   const t = v * (1 - (1 - f) * s);
 
-  const [r, g, b] =
-    i % 6 === 0
-      ? [v, t, p]
-      : i % 6 === 1
-        ? [q, v, p]
-        : i % 6 === 2
-          ? [p, v, t]
-          : i % 6 === 3
-            ? [p, q, v]
-            : i % 6 === 4
-              ? [t, p, v]
-              : [v, p, q];
+  switch (i % 6) {
+    case 0:
+      [r, g, b] = [v, t, p];
+      break;
+    case 1:
+      [r, g, b] = [q, v, p];
+      break;
+    case 2:
+      [r, g, b] = [p, v, t];
+      break;
+    case 3:
+      [r, g, b] = [p, q, v];
+      break;
+    case 4:
+      [r, g, b] = [t, p, v];
+      break;
+    case 5:
+      [r, g, b] = [v, p, q];
+      break;
+  }
 
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-export function rgbToHex([r, g, b]: [number, number, number]): string {
-  return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+export function rgbToHex(rgb: [number, number, number]): string {
+  return "#" + rgb.map((x) => x.toString(16).padStart(2, "0")).join("");
 }
+
+// Example usage
+const inputColor = "#3498db";
+const palette = generateColorPalette(inputColor);
+console.log(palette);

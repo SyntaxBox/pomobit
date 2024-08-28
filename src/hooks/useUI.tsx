@@ -1,8 +1,8 @@
 import { ColorUtils } from "../lib/utils";
 import useLocalStorage from "./useLocalStorage";
 
-export const DEFAULT_WORK = "#00e030";
-export const DEFAULT_BREAK = "#ee000e";
+export const DEFAULT_WORK = "#ee000e";
+export const DEFAULT_BREAK = "#00e030";
 
 export function useUI() {
   const [workColor, setWorkColor] = useLocalStorage("work-color", DEFAULT_WORK);

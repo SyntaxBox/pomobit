@@ -1,5 +1,5 @@
 export type ColorPallet = ReturnType<typeof generateColorPalette>;
-export function generateColorPalette(hexColor: string): Record<string, string> {
+export function generateColorPalette(hexColor: string) {
   // Convert hex to RGB
   const rgb = hexToRgb(hexColor);
 
@@ -27,7 +27,7 @@ export function generateColorPalette(hexColor: string): Record<string, string> {
     light2,
     text1,
     text2,
-  };
+  } as const;
 }
 
 export function hexToRgb(hex: string): [number, number, number] {
@@ -109,7 +109,9 @@ export function rgbToHex(rgb: [number, number, number]): string {
   return "#" + rgb.map((x) => x.toString(16).padStart(2, "0")).join("");
 }
 
-// Example usage
-const inputColor = "#3498db";
-const palette = generateColorPalette(inputColor);
-console.log(palette);
+export function isHexColor(color: string): boolean {
+  // Regular expression to match valid hex color formats
+  const hexColorRegex = /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+
+  return hexColorRegex.test(color);
+}

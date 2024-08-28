@@ -1,4 +1,4 @@
-import { useUI } from "../hooks";
+import { useUI } from "./hooks";
 
 function App() {
   const { workPallet, breakPallet } = useUI();

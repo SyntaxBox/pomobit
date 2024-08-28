@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useState } from "react";
 import { cn, ColorUtils } from "../lib/utils";
 
 export function Button({
@@ -10,6 +10,7 @@ export function Button({
 }: HTMLAttributes<HTMLButtonElement> & {
   pallet: ColorUtils.ColorPallet;
 }) {
+  const [hover, setHover] = useState(false);
   return (
     <button
       className={cn(
@@ -17,9 +18,13 @@ export function Button({
         className,
       )}
       style={{
-        background: pallet.primary1,
+        color: pallet.text1,
+        fill: pallet.text1,
+        backgroundColor: `${pallet.primary1}${hover ? "80" : "70"}`,
         ...style,
       }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       {...rest}
     >
       {children}

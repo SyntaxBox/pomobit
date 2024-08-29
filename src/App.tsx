@@ -1,3 +1,4 @@
+import { PauseButton, ResetButton } from "./components";
 import { PomodoroClock } from "./components/pomodoro-clock";
 import { useUI } from "./hooks";
 
@@ -13,6 +14,8 @@ function App() {
     >
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <PomodoroClock />
+      <PauseButton />
+      <ResetButton />
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import { useUI } from "../hooks";
+import { TimeUtils } from "../lib/utils";
+import { usePomodoroStore } from "../store";
 import { Clock } from "../ui";
 
 export function PomodoroClock() {
   const { workPallet, breakPallet } = useUI();
-  const time = {
-    min: 24,
-    sec: 4,
-  };
-
-  return <Clock {...time} pallet={breakPallet} />;
+  const { isBreak, timeLeft } = usePomodoroStore();
+  const time = TimeUtils.getMinutesAndSeconds(timeLeft);
+  return <Clock {...time} pallet={isBreak ? breakPallet : workPallet} />;
 }

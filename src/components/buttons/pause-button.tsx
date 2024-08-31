@@ -8,22 +8,45 @@ export function PauseButton({
   onPause,
   onResume,
   pallet,
+  controlled = false,
+  isPaused: externalIsPaused,
+  setPaused: externalSetPaused,
+  reset = false, // Add reset prop
   ...rest
 }: Omit<HTMLAttributes<HTMLButtonElement>, "children" | "onClick"> & {
   onPause?: () => void;
   onResume?: () => void;
   pallet?: ColorUtils.ColorPallet;
+  controlled?: boolean;
+  isPaused?: boolean;
+  setPaused?: (paused: boolean) => void;
+  reset?: boolean; // New reset prop
 }) {
   const { workPallet } = useUI();
-  const [isPaused, setIsPaused] = useState(false);
+  const [internalIsPaused, setInternalIsPaused] = useState(false);
+
+  const isPaused = controlled ? externalIsPaused : internalIsPaused;
 
   useEffect(() => {
-    isPaused ? onPause && onPause() : onResume && onResume();
+    if (reset) {
+      setInternalIsPaused(false); // Reset to initial state (Triangle icon)
+      externalSetPaused?.(false);
+    }
+  }, [reset, externalSetPaused]);
+
+  useEffect(() => {
+    if (isPaused !== undefined) {
+      isPaused ? onResume?.() : onPause?.();
+    }
   }, [isPaused, onPause, onResume]);
 
   const handleClick = useCallback(() => {
-    setIsPaused((prev) => !prev);
-  }, []);
+    if (controlled) {
+      externalSetPaused?.(!isPaused);
+    } else {
+      setInternalIsPaused((prev) => !prev);
+    }
+  }, [controlled, externalSetPaused, isPaused]);
 
   return (
     <Button

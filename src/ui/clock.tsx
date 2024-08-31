@@ -1,16 +1,16 @@
 import { ColorUtils } from "../lib/utils";
 
 export function Clock({
-  min,
-  sec,
+  minutes,
+  seconds,
   pallet,
 }: {
-  min: number;
-  sec: number;
+  minutes: number;
+  seconds: number;
   pallet: ColorUtils.ColorPallet;
 }) {
-  if (sec > 60 || min > 60 || sec < 0 || min < 0) {
-    throw new Error(`Invalid Props, sec: ${sec}, min: ${min}`);
+  if (seconds > 60 || minutes > 60 || seconds < 0 || minutes < 0) {
+    throw new Error(`Invalid Props, seconds: ${seconds}, minutes: ${minutes}`);
   }
 
   return (
@@ -21,8 +21,8 @@ export function Clock({
           color: pallet.text1,
         }}
       >
-        {min < 10 ? 0 : ""}
-        {min}
+        {minutes < 10 ? 0 : ""}
+        {minutes}
       </span>
       <span
         className="text-9xl opacity-80 font-semibold"
@@ -30,8 +30,8 @@ export function Clock({
           color: pallet.text2,
         }}
       >
-        {sec < 10 ? 0 : ""}
-        {sec}
+        {seconds < 10 ? 0 : ""}
+        {seconds}
       </span>
     </div>
   );

@@ -3,6 +3,7 @@ import { ColorUtils } from "../../lib/utils";
 import { Button } from "../../ui/button";
 import { useUI } from "../../hooks";
 import { Triangle, Pause } from "lucide-react";
+import { usePomodoroStore } from "../../store";
 
 export function PauseButton({
   onPause,
@@ -22,7 +23,8 @@ export function PauseButton({
   setPaused?: (paused: boolean) => void;
   reset?: boolean; // New reset prop
 }) {
-  const { workPallet } = useUI();
+  const { workPallet, breakPallet } = useUI();
+  const { isBreak } = usePomodoroStore();
   const [internalIsPaused, setInternalIsPaused] = useState(false);
 
   const isPaused = controlled ? externalIsPaused : internalIsPaused;
@@ -51,7 +53,7 @@ export function PauseButton({
   return (
     <Button
       className="w-10 h-10 p-0"
-      pallet={pallet ?? workPallet}
+      pallet={pallet ?? (isBreak ? breakPallet : workPallet)}
       {...rest}
       onClick={handleClick}
     >

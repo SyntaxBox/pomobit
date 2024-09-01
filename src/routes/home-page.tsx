@@ -26,7 +26,6 @@ export default function HomePage() {
         background,
       }}
     >
-      <Navbar />
       <PomodoroClock />
       <div className="flex gap-3">
         <PauseButton

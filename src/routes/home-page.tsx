@@ -20,7 +20,7 @@ export default function HomePage() {
       ${workPallet.background} ${percentage - transitionWidth / 2}%, 
       ${breakPallet.background} ${percentage + transitionWidth / 2}%)`;
   return (
-    <div
+    <section
       className="flex flex-col items-center justify-center gap-3 h-full flex-grow"
       style={{
         background,
@@ -36,6 +36,6 @@ export default function HomePage() {
 
         <ResetButton onClick={resetTimer} />
       </div>
-    </div>
+    </section>
   );
 }

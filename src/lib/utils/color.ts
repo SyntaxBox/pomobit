@@ -11,6 +11,7 @@ export function generateColorPalette(hexColor: string) {
   const primary2 = rgbToHex(hsvToRgb([(hsv[0] + 0.1) % 1, hsv[1], hsv[2]]));
   const secondary = rgbToHex(hsvToRgb([(hsv[0] + 0.5) % 1, hsv[1], hsv[2]]));
   const background = rgbToHex(hsvToRgb([hsv[0], 0.1, 0.95]));
+  const background2 = rgbToHex(hsvToRgb([hsv[0], 0.25, 0.85]));
   const light1 = rgbToHex(hsvToRgb([hsv[0], 0.3, 0.9]));
   const light2 = rgbToHex(hsvToRgb([hsv[0], 0.5, 0.8]));
 
@@ -23,6 +24,7 @@ export function generateColorPalette(hexColor: string) {
     primary2,
     secondary,
     background,
+    background2,
     light1,
     light2,
     text1,

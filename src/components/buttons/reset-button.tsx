@@ -3,7 +3,6 @@ import { ColorUtils } from "../../lib/utils";
 import { Button } from "../../ui/button";
 import { useUI } from "../../hooks";
 import { RotateCcw } from "lucide-react";
-import { usePomodoroStore } from "../../store";
 
 export function ResetButton({
   pallet,
@@ -12,12 +11,11 @@ export function ResetButton({
 }: Omit<HTMLAttributes<HTMLButtonElement>, "children"> & {
   pallet?: ColorUtils.ColorPallet;
 }) {
-  const { workPallet, breakPallet } = useUI();
-  const { isBreak } = usePomodoroStore();
+  const { currentPallet } = useUI();
   return (
     <Button
       className="w-16 h-16 p-0"
-      pallet={pallet ?? (isBreak ? breakPallet : workPallet)}
+      pallet={pallet ?? currentPallet}
       {...rest}
       onClick={onClick}
     >

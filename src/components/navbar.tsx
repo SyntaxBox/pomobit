@@ -1,3 +1,3 @@
 export function Navbar() {
-  return <p>Hello world</p>;
+  return <div className="h-12">Hello world</div>;
 }

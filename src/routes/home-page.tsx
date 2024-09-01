@@ -1,4 +1,4 @@
-import { Navbar, PauseButton, ResetButton } from "../components";
+import { PauseButton, ResetButton } from "../components";
 import { PomodoroClock } from "../components/pomodoro-clock";
 import { usePomodoro, useUI } from "../hooks";
 import { usePomodoroStore } from "../store";
@@ -21,7 +21,7 @@ export default function HomePage() {
       ${breakPallet.background} ${percentage + transitionWidth / 2}%)`;
   return (
     <div
-      className="h-screen flex flex-col items-center justify-center gap-3"
+      className="flex flex-col items-center justify-center gap-3 h-full flex-grow"
       style={{
         background,
       }}

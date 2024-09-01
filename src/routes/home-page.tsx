@@ -1,9 +1,9 @@
-import { PauseButton, ResetButton } from "./components";
-import { PomodoroClock } from "./components/pomodoro-clock";
-import { usePomodoro, useUI } from "./hooks";
-import { usePomodoroStore } from "./store";
+import { Navbar, PauseButton, ResetButton } from "../components";
+import { PomodoroClock } from "../components/pomodoro-clock";
+import { usePomodoro, useUI } from "../hooks";
+import { usePomodoroStore } from "../store";
 
-function App() {
+export default function HomePage() {
   const { workPallet, breakPallet } = useUI();
   const { getGradientPercentage } = usePomodoro();
   const { startTimer, pauseTimer, resetTimer, isBreak, isRunning } =
@@ -21,21 +21,22 @@ function App() {
       ${breakPallet.background} ${percentage + transitionWidth / 2}%)`;
   return (
     <div
-      className="h-screen"
+      className="h-screen flex flex-col items-center justify-center gap-3"
       style={{
         background,
       }}
     >
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <Navbar />
       <PomodoroClock />
-      <PauseButton
-        onPause={pauseTimer}
-        onResume={startTimer}
-        reset={!isRunning}
-      />
-      {!isBreak && <ResetButton onClick={resetTimer} />}
+      <div className="flex gap-3">
+        <PauseButton
+          onPause={pauseTimer}
+          onResume={startTimer}
+          reset={!isRunning}
+        />
+
+        <ResetButton onClick={resetTimer} />
+      </div>
     </div>
   );
 }
-
-export default App;

@@ -16,12 +16,12 @@ export function ResetButton({
   const { isBreak } = usePomodoroStore();
   return (
     <Button
-      className="w-10 h-10 p-0"
+      className="w-16 h-16 p-0"
       pallet={pallet ?? (isBreak ? breakPallet : workPallet)}
       {...rest}
       onClick={onClick}
     >
-      <RotateCcw className="w-4 rotate-90" strokeWidth={4} />
+      <RotateCcw className="rotate-90 h-7 w-7" strokeWidth={3} />
     </Button>
   );
 }

@@ -1,6 +1,6 @@
 import { HTMLAttributes, useEffect, useState, useCallback } from "react";
 import { ColorUtils } from "../../lib/utils";
-import { Button } from "../../ui/button";
+import { Button } from "../../ui";
 import { useUI } from "../../hooks";
 import { Triangle, Pause } from "lucide-react";
 

@@ -15,7 +15,7 @@ export function Container({
     <Tag
       {...rest}
       className={cn(
-        "h-full w-full p-2 container mx-auto max-w-4xl",
+        "h-full w-full p-2 container mx-auto max-w-9xl",
         rest.className,
       )}
     >

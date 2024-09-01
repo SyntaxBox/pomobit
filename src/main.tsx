@@ -5,6 +5,7 @@ import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./routes/error-page";
 import HomePage from "./routes/home-page";
+import SettingsPage from "./routes/settings-page";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
     ],
   },

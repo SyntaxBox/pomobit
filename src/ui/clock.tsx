@@ -14,9 +14,9 @@ export function Clock({
   }
 
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center">
       <span
-        className="text-9xl font-bold"
+        className="text-9xl font-bold w-40"
         style={{
           color: pallet.text1,
         }}
@@ -25,7 +25,7 @@ export function Clock({
         {minutes}
       </span>
       <span
-        className="text-9xl opacity-80 font-semibold"
+        className="text-9xl opacity-80 font-bold w-40"
         style={{
           color: pallet.text2,
         }}

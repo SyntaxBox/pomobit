@@ -4,7 +4,12 @@ import { useUI } from "../hooks";
 export function Navbar() {
   const { currentPallet } = useUI();
   return (
-    <div className="h-14 py-2 px-4 flex justify-between shadow-lg shadow-black/5 z-10 sticky top-0 left-0">
+    <div
+      style={{
+        background: currentPallet.background + "90",
+      }}
+      className="h-14 py-2 px-4 flex justify-between shadow-lg shadow-black/5 z-10 sticky top-0 left-0"
+    >
       <Link to="/">
         <img src="/icon.svg" alt="logo icon" className="w-24 h-24 -mt-5" />
       </Link>

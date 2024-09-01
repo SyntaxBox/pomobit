@@ -14,23 +14,25 @@ export function Clock({
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center justify-center">
       <span
-        className="text-[256px] font-bold -mb-20"
+        className="text-[256px] font-bold"
         style={{
           color: pallet.text1,
+          lineHeight: 0.8,
         }}
       >
-        {minutes < 10 ? 0 : ""}
+        {minutes < 10 ? "0" : ""}
         {minutes}
       </span>
       <span
-        className="text-[256px] opacity-80 font-bold -mt-20"
+        className="text-[256px] opacity-80 font-bold"
         style={{
           color: pallet.text2,
+          lineHeight: 0.8,
         }}
       >
-        {seconds < 10 ? 0 : ""}
+        {seconds < 10 ? "0" : ""}
         {seconds}
       </span>
     </div>

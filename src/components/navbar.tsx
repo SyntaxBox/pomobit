@@ -4,7 +4,7 @@ import { useUI } from "../hooks";
 export function Navbar() {
   const { currentPallet } = useUI();
   return (
-    <div className="h-14 py-2 px-4 flex justify-between">
+    <div className="h-14 py-2 px-4 flex justify-between shadow-lg shadow-black/5 z-10 sticky top-0 left-0">
       <Link to="/">
         <img src="/icon.svg" alt="logo icon" className="w-24 h-24 -mt-5" />
       </Link>
@@ -13,7 +13,7 @@ export function Navbar() {
         style={{
           color: currentPallet.text1,
         }}
-        className="flex items-center gap-3 text-lg"
+        className="flex items-center gap-3 text-lg font-meduim"
       >
         <Link to="/settings" className="hover:underline">
           Settings

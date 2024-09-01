@@ -14,13 +14,13 @@ export function Button({
   return (
     <button
       className={cn(
-        "p-3 rounded-xl flex items-center justify-center",
+        "p-3 rounded-xl flex items-center justify-center z-10",
         className,
       )}
       style={{
         color: pallet.text1,
         fill: pallet.text1,
-        backgroundColor: `${pallet.primary1}${hover ? "90" : "60"}`,
+        backgroundColor: `${pallet.primary1}${hover ? "80" : "50"}`,
         ...style,
       }}
       onMouseEnter={() => setHover(true)}

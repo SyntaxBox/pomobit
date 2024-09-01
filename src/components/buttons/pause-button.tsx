@@ -58,7 +58,7 @@ export function PauseButton({
       onClick={handleClick}
     >
       {isPaused ? (
-        <Pause fill="current" className="h-9 w-9" />
+        <Pause fill="current" className="h-9 w-9 " />
       ) : (
         <Triangle className="h-7 w-7 rotate-90" fill="current" />
       )}

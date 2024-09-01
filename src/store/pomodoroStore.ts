@@ -38,14 +38,14 @@ export const usePomodoroStore = create<PomodoroState>((set) => ({
   pauseTimer: () => set({ isRunning: false }),
   resetTimer: () =>
     set((state) => ({
-      timeLeft: state.isBreak ? state.breakDuration : state.workDuration,
+      timeLeft: state.workDuration,
       isRunning: false,
+      isBreak: false,
     })),
   switchMode: () =>
     set((state) => ({
       isBreak: !state.isBreak,
       timeLeft: !state.isBreak ? state.breakDuration : state.workDuration,
-      isRunning: false,
     })),
   tick: () =>
     set((state) => ({

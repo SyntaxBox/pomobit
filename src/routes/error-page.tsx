@@ -7,7 +7,7 @@ type ErrorType = {
 };
 
 export default function ErrorPage() {
-  const { workPallet } = useUI();
+  const { currentPallet } = useUI();
   let error = useRouteError() as Partial<ErrorType> | undefined;
   console.error(error);
 
@@ -27,8 +27,8 @@ export default function ErrorPage() {
       id="error-page"
       className="flex items-center justify-center flex-col h-screen"
       style={{
-        background: workPallet.background,
-        color: workPallet.text1,
+        background: currentPallet.background,
+        color: currentPallet.text1,
       }}
     >
       <h1 className="font-bold text-4xl">Oops!</h1>

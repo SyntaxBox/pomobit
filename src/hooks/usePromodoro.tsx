@@ -17,6 +17,11 @@ export function usePomodoro() {
     workDuration,
     breakDuration,
     switchMode,
+    pauseTimer,
+    resetTimer,
+    updateTimeLeft,
+    setWorkDuration,
+    setBreakDuration,
   } = usePomodoroStore();
 
   const [session, setSession] = useState<Session | null>(null);
@@ -79,5 +84,19 @@ export function usePomodoro() {
     startTimer();
   };
 
-  return { getGradientPercentage };
+  return {
+    getGradientPercentage,
+    isRunning,
+    startTimer,
+    timeLeft,
+    isBreak,
+    workDuration,
+    breakDuration,
+    switchMode,
+    pauseTimer,
+    resetTimer,
+    updateTimeLeft,
+    setWorkDuration,
+    setBreakDuration,
+  };
 }

@@ -19,7 +19,7 @@ export function HueBase({
   onChange: (newHue: { h: number }) => void;
 }) {
   const handleMove = (interaction: Interaction) => {
-    onChange({ h: 360 * interaction.left });
+    onChange({ h: 359 * interaction.left });
   };
 
   const handleKey = (offset: Interaction) => {

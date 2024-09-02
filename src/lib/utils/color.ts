@@ -166,3 +166,93 @@ export const hsvaToHslString = (hsva: HsvaColor): string => {
   const { h, s, l } = hsvaToHsla(hsva);
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
+
+export function hexToHsv(hex: string) {
+  // Remove the hash at the start if it's there
+  hex = hex.replace(/^#/, "");
+
+  // Parse r, g, b values
+  let r = parseInt(hex.substring(0, 2), 16) / 255;
+  let g = parseInt(hex.substring(2, 4), 16) / 255;
+  let b = parseInt(hex.substring(4, 6), 16) / 255;
+
+  // Find the maximum and minimum values of r, g, and b
+  let max = Math.max(r, g, b);
+  let min = Math.min(r, g, b);
+  let delta = max - min;
+
+  // Calculate hue
+  let h;
+  if (delta === 0) {
+    h = 0;
+  } else if (max === r) {
+    h = ((g - b) / delta) % 6;
+  } else if (max === g) {
+    h = (b - r) / delta + 2;
+  } else {
+    h = (r - g) / delta + 4;
+  }
+  h = Math.round(h * 60);
+  if (h < 0) h += 360;
+
+  // Calculate saturation
+  let s = max === 0 ? 0 : delta / max;
+  s = +(s * 100).toFixed(1);
+
+  // Calculate value
+  let v = +(max * 100).toFixed(1);
+
+  return { h, s, v };
+}
+
+export function hsvToHex(h: number, s: number, v: number) {
+  // Convert saturation and value from percentage to fraction
+  s /= 100;
+  v /= 100;
+
+  let c = v * s;
+  let x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  let m = v - c;
+
+  let r = 0,
+    g = 0,
+    b = 0;
+
+  if (0 <= h && h < 60) {
+    r = c;
+    g = x;
+    b = 0;
+  } else if (60 <= h && h < 120) {
+    r = x;
+    g = c;
+    b = 0;
+  } else if (120 <= h && h < 180) {
+    r = 0;
+    g = c;
+    b = x;
+  } else if (180 <= h && h < 240) {
+    r = 0;
+    g = x;
+    b = c;
+  } else if (240 <= h && h < 300) {
+    r = x;
+    g = 0;
+    b = c;
+  } else if (300 <= h && h < 360) {
+    r = c;
+    g = 0;
+    b = x;
+  }
+
+  // Add m to match the value (v)
+  r = Math.round((r + m) * 255);
+  g = Math.round((g + m) * 255);
+  b = Math.round((b + m) * 255);
+
+  // Convert r, g, b to hex and pad with zeros if necessary
+  let rHex = r.toString(16).padStart(2, "0");
+  let gHex = g.toString(16).padStart(2, "0");
+  let bHex = b.toString(16).padStart(2, "0");
+
+  return `#${rHex}${gHex}${bHex}`;
+}

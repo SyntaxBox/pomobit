@@ -7,17 +7,21 @@ export default function SettingsPage() {
       style={{
         background: currentPallet.background + "b2",
       }}
-      className="pt-8 flex-grow"
+      className="flex-grow"
     >
-      <Container
-        as="div"
-        className="rounded-lg p-2"
-        style={{
-          border: `dashed 1px ${currentPallet.text1}`,
-        }}
-      >
-        <Title className="p-4">Settings</Title>
-        <Hue hue={120} onChange={() => {}} />
+      <Container as="div">
+        <div
+          className="rounded-lg p-2"
+          style={{
+            border: `dashed 1px ${currentPallet.text1}`,
+          }}
+        >
+          <Title className="p-4">Settings</Title>
+          <div>
+            <h2>Work Color</h2>
+            <Hue hue={120} onChange={() => {}} />
+          </div>
+        </div>
       </Container>
     </section>
   );

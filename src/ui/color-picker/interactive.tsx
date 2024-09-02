@@ -166,7 +166,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       {...rest}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
-      className="react-colorful__interactive"
+      className="child-focus-scale absolute left-0 right-0 top-0 bottom-0 outline-none touch-none rounded-full"
       ref={container}
       onKeyDown={handleKeyDown}
       tabIndex={0}

@@ -3,19 +3,21 @@ import React from "react";
 import { Interactive, Interaction } from "./interactive";
 import { Pointer } from "./pointer";
 
-import { formatClassName } from "../../lib/utils";
+import { cn } from "../../lib/utils";
 
 import { ColorUtils } from "../../lib/utils";
 
 const { clamp, round, hsvaToHslString } = ColorUtils;
 
-interface Props {
+export function HueBase({
+  className,
+  hue,
+  onChange,
+}: {
   className?: string;
   hue: number;
   onChange: (newHue: { h: number }) => void;
-}
-
-const HueBase = ({ className, hue, onChange }: Props) => {
+}) {
   const handleMove = (interaction: Interaction) => {
     onChange({ h: 360 * interaction.left });
   };
@@ -27,10 +29,23 @@ const HueBase = ({ className, hue, onChange }: Props) => {
     });
   };
 
-  const nodeClassName = formatClassName(["react-colorful__hue", className]);
-
+  const background = ` linear-gradient(
+    to right,
+    #f00 0%,
+    #ff0 17%,
+    #0f0 33%,
+    #0ff 50%,
+    #00f 67%,
+    #f0f 83%,
+    #f00 100%
+  )`;
   return (
-    <div className={nodeClassName}>
+    <div
+      className={cn("relative h-10 rounded-xl", className)}
+      style={{
+        background,
+      }}
+    >
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
@@ -40,13 +55,12 @@ const HueBase = ({ className, hue, onChange }: Props) => {
         aria-valuemin="0"
       >
         <Pointer
-          className="react-colorful__hue-pointer"
           left={hue / 360}
           color={hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 })}
         />
       </Interactive>
     </div>
   );
-};
+}
 
 export const Hue = React.memo(HueBase);

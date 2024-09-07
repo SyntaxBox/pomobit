@@ -6,3 +6,4 @@ export * from "./container";
 export * from "./color-picker";
 export * from "./h2";
 export * from "./h3";
+export * from "./h4";

@@ -46,7 +46,7 @@ export function usePomodoro() {
           saveSession();
           startNextSession();
         }
-      }, 10);
+      }, 1000);
     } else if (session && session.start && session.end === 0) {
       // If the timer is paused or reset, update the session end time
       setSession((prevSession) =>

@@ -19,6 +19,7 @@ export function Clock({
         className="text-[256px] font-bold"
         style={{
           color: pallet.text1,
+          width: "2ch",
           lineHeight: 0.8,
         }}
       >
@@ -28,6 +29,7 @@ export function Clock({
         className="text-[256px] opacity-80 font-bold"
         style={{
           color: pallet.text2,
+          width: "2ch",
           lineHeight: 0.8,
         }}
       >

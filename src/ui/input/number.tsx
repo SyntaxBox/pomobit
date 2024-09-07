@@ -103,6 +103,7 @@ export function NumberInput({
           onMouseLeave={stopChanging}
           onTouchStart={startIncrementing}
           onTouchEnd={stopChanging}
+          onClick={() => onChange && onChange(value + 1)}
           className="border-b border-l h-full w-fit p-1"
           style={{
             borderColor: currentPallet.text1 + "90",
@@ -116,6 +117,7 @@ export function NumberInput({
           onMouseLeave={stopChanging}
           onTouchStart={startDecrementing}
           onTouchEnd={stopChanging}
+          onClick={() => onChange && onChange(value - 1)}
           className="h-full w-fit p-1 border-l"
           style={{
             borderColor: currentPallet.text1 + "90",

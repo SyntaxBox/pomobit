@@ -31,7 +31,7 @@ export function TimeInput({
     const totalSeconds = updatedMinutes * 60 + updatedSeconds;
 
     // Call onChange with the new total seconds
-    onChange(totalSeconds);
+    if (totalSeconds > 0) onChange(totalSeconds);
   };
 
   return (

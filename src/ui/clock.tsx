@@ -22,8 +22,7 @@ export function Clock({
           lineHeight: 0.8,
         }}
       >
-        {minutes < 10 ? "0" : ""}
-        {minutes}
+        {minutes.toString().padStart(2, "0")}
       </span>
       <span
         className="text-[256px] opacity-80 font-bold"
@@ -32,8 +31,7 @@ export function Clock({
           lineHeight: 0.8,
         }}
       >
-        {seconds < 10 ? "0" : ""}
-        {seconds}
+        {seconds.toString().padStart(2, "0")}
       </span>
     </div>
   );

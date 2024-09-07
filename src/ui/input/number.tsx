@@ -9,13 +9,19 @@ export function NumberInput({
   text,
   style,
   className,
+  zeroPadding = 2,
   ...rest
 }: {
   value?: number;
+  zeroPadding?: number;
   text?: string;
   onChange?: (n: number) => void;
-} & HTMLAttributes<HTMLDivElement>) {
+} & Omit<HTMLAttributes<HTMLDivElement>, "onChange">) {
   const { currentPallet } = useUI();
+
+  // Function to pad the value with leading zeros
+  const paddedValue = value.toString().padStart(zeroPadding, "0");
+
   return (
     <div
       {...rest}
@@ -32,9 +38,9 @@ export function NumberInput({
       <div className="flex gap-[2px] items-center">
         <input
           disabled
-          value={value}
+          value={paddedValue}
           style={{
-            width: value.toString().length + "ch",
+            width: paddedValue.length + "ch",
           }}
           className="text-lg bg-transparent"
         />

@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
 interface PomodoroState {
-  workDuration: number; // Duration in seconds
-  breakDuration: number; // Duration in seconds
+  workShift?: number; // Shift in seconds
+  breakShift?: number; // Shift in seconds
   isRunning: boolean;
   timeLeft: number;
   isBreak: boolean;
-  setWorkDuration: (duration: number) => void;
-  setBreakDuration: (duration: number) => void;
+  setWorkShift: (duration: number) => void;
+  setBreakShift: (duration: number) => void;
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
@@ -17,20 +17,18 @@ interface PomodoroState {
 }
 
 export const usePomodoroStore = create<PomodoroState>((set) => ({
-  workDuration: 25 * 60, // 25 minutes in seconds
-  breakDuration: 5 * 60, // 5 minutes in seconds
   isRunning: false,
   timeLeft: 25 * 60,
   isBreak: false,
 
-  setWorkDuration: (duration: number) =>
+  setWorkShift: (duration: number) =>
     set((state) => ({
-      workDuration: duration,
+      workShift: duration,
       timeLeft: !state.isBreak ? duration : state.timeLeft,
     })),
-  setBreakDuration: (duration: number) =>
+  setBreakShift: (duration: number) =>
     set((state) => ({
-      breakDuration: duration,
+      breakShift: duration,
       timeLeft: state.isBreak ? duration : state.timeLeft,
     })),
 
@@ -38,14 +36,14 @@ export const usePomodoroStore = create<PomodoroState>((set) => ({
   pauseTimer: () => set({ isRunning: false }),
   resetTimer: () =>
     set((state) => ({
-      timeLeft: state.workDuration,
+      timeLeft: state.workShift,
       isRunning: false,
       isBreak: false,
     })),
   switchMode: () =>
     set((state) => ({
       isBreak: !state.isBreak,
-      timeLeft: !state.isBreak ? state.breakDuration : state.workDuration,
+      timeLeft: !state.isBreak ? state.breakShift : state.workShift,
     })),
   tick: () =>
     set((state) => ({

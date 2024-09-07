@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePomodoroStore } from "../store/";
+import { useSettings } from "./useSettings";
 
 interface Session {
   start: number;
@@ -14,16 +15,14 @@ export function usePomodoro() {
     tick,
     timeLeft,
     isBreak,
-    workDuration,
-    breakDuration,
     switchMode,
     pauseTimer,
     resetTimer,
     updateTimeLeft,
-    setWorkDuration,
-    setBreakDuration,
+    setWorkShift,
+    setBreakShift,
   } = usePomodoroStore();
-
+  const { workShift, breakShift } = useSettings();
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -76,7 +75,7 @@ export function usePomodoro() {
   };
 
   const getGradientPercentage = () => {
-    return (timeLeft / (isBreak ? breakDuration : workDuration)) * 100;
+    return (timeLeft / (isBreak ? breakShift : workShift)) * 100;
   };
 
   const startNextSession = () => {
@@ -90,13 +89,13 @@ export function usePomodoro() {
     startTimer,
     timeLeft,
     isBreak,
-    workDuration,
-    breakDuration,
+    workShift,
+    breakShift,
     switchMode,
     pauseTimer,
     resetTimer,
     updateTimeLeft,
-    setWorkDuration,
-    setBreakDuration,
+    setWorkShift,
+    setBreakShift,
   };
 }

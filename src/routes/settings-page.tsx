@@ -1,9 +1,13 @@
+import { TimeInput } from "../components/time-input";
 import { useUI } from "../hooks";
 import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
 import { Button, Container, H3, Hue, Title } from "../ui";
+import { H4 } from "../ui/h4";
 export default function SettingsPage() {
   const { currentPallet, workPallet, breakPallet } = useUI();
-  const { workHue, breakHue, updateSettings } = useSettings();
+  const { workHue, breakHue, updateSettings, workShift, breakShift } =
+    useSettings();
+
   return (
     <section
       style={{
@@ -62,6 +66,14 @@ export default function SettingsPage() {
                 Reset
               </Button>
             </div>
+          </div>
+          <div>
+            <H3>Work/Break Times: </H3>
+            <H4>WORK</H4>
+            <TimeInput
+              time={workShift}
+              onChange={(time) => updateSettings({ workShift: time })}
+            />
           </div>
         </div>
       </Container>

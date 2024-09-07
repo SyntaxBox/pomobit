@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 import { useUI } from "../../hooks";
 import { HTMLAttributes } from "react";

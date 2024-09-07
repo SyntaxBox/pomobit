@@ -70,7 +70,7 @@ export default function SettingsPage() {
           <div className="space-y-2">
             <H3>Work/Break Times: </H3>
             <div className="flex gap-3 items-center w-full md:w-fit justify-between md:justify-start">
-              <H4 className="mt-2 mr-[10px]">WORK:</H4>
+              <H4 className="my-0 mr-[10px]">WORK:</H4>
               <TimeInput
                 time={workShift}
                 onChange={(time) => updateSettings({ workShift: time })}
@@ -88,7 +88,7 @@ export default function SettingsPage() {
               </Button>
             </div>
             <div className="flex gap-3 items-center w-full md:w-fit justify-between md:justify-start">
-              <H4 className="mt-2">BREAK:</H4>
+              <H4 className="my-0">BREAK:</H4>
               <TimeInput
                 time={breakShift}
                 onChange={(time) => updateSettings({ breakShift: time })}

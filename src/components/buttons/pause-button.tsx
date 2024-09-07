@@ -50,7 +50,7 @@ export function PauseButton({
 
   return (
     <Button
-      className="w-16 h-16 p-0"
+      className="w-16 h-16 p-0 rounded-2xl"
       pallet={pallet ?? currentPallet}
       {...rest}
       onClick={handleClick}

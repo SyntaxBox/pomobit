@@ -74,6 +74,11 @@ export default function SettingsPage() {
               time={workShift}
               onChange={(time) => updateSettings({ workShift: time })}
             />
+            <H4>BREAK</H4>
+            <TimeInput
+              time={breakShift}
+              onChange={(time) => updateSettings({ breakShift: time })}
+            />
           </div>
         </div>
       </Container>

@@ -16,7 +16,8 @@ export const DEFAULT_SETTINGS = {
 
 export function useSettings() {
   const { workHue, breakHue, setWorkHue, setBreakHue } = useSettingsStore();
-  const { workShift, breakShift } = usePomodoroStore();
+  const { workShift, breakShift, setWorkShift, setBreakShift } =
+    usePomodoroStore();
   const [localSettings, setLocalSettings] = useLocalStorage(
     "settings",
     DEFAULT_SETTINGS,
@@ -28,8 +29,8 @@ export function useSettings() {
       setBreakHue(localSettings.breakHue);
     }
     if (workShift === undefined || breakShift === undefined) {
-      setWorkHue(localSettings.workShift);
-      setBreakHue(localSettings.breakShift);
+      setWorkShift(localSettings.workShift);
+      setBreakShift(localSettings.breakShift);
     }
   }, []);
 
@@ -42,9 +43,15 @@ export function useSettings() {
       if (updates.breakHue !== undefined) {
         setBreakHue(updates.breakHue);
       }
+      if (updates.workShift !== undefined) {
+        setWorkShift(updates.workShift);
+      }
+      if (updates.breakShift !== undefined) {
+        setBreakShift(updates.breakShift);
+      }
     },
 
-    [localSettings, setLocalSettings],
+    [setLocalSettings],
   );
   return {
     workHue: workHue ?? DEFAULT_WORK_HUE,

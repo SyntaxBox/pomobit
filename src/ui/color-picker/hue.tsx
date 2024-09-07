@@ -41,7 +41,7 @@ export function HueBase({
   )`;
   return (
     <div
-      className={cn("relative h-10 rounded-xl", className)}
+      className={cn("relative h-10 rounded-md", className)}
       style={{
         background,
       }}

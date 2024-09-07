@@ -67,18 +67,44 @@ export default function SettingsPage() {
               </Button>
             </div>
           </div>
-          <div>
+          <div className="space-y-2">
             <H3>Work/Break Times: </H3>
-            <H4>WORK</H4>
-            <TimeInput
-              time={workShift}
-              onChange={(time) => updateSettings({ workShift: time })}
-            />
-            <H4>BREAK</H4>
-            <TimeInput
-              time={breakShift}
-              onChange={(time) => updateSettings({ breakShift: time })}
-            />
+            <div className="flex gap-3 items-center w-full md:w-fit justify-between md:justify-start">
+              <H4 className="mt-2 mr-[10px]">WORK:</H4>
+              <TimeInput
+                time={workShift}
+                onChange={(time) => updateSettings({ workShift: time })}
+              />
+              <Button
+                pallet={currentPallet}
+                className="p-2"
+                onClick={() =>
+                  updateSettings({
+                    workShift: DEFAULT_SETTINGS.workShift,
+                  })
+                }
+              >
+                Reset
+              </Button>
+            </div>
+            <div className="flex gap-3 items-center w-full md:w-fit justify-between md:justify-start">
+              <H4 className="mt-2">BREAK:</H4>
+              <TimeInput
+                time={breakShift}
+                onChange={(time) => updateSettings({ breakShift: time })}
+              />
+              <Button
+                pallet={currentPallet}
+                className="p-2"
+                onClick={() =>
+                  updateSettings({
+                    breakShift: DEFAULT_SETTINGS.breakShift,
+                  })
+                }
+              >
+                Reset
+              </Button>
+            </div>
           </div>
         </div>
       </Container>

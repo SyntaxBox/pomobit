@@ -1,12 +1,18 @@
 import { TimeInput } from "../components/time-input";
 import { useUI } from "../hooks";
 import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
-import { Button, Container, H3, Hue, Title } from "../ui";
+import { Button, Container, H3, Hue, Switch, Title } from "../ui";
 import { H4 } from "../ui/h4";
 export default function SettingsPage() {
   const { currentPallet, workPallet, breakPallet } = useUI();
-  const { workHue, breakHue, updateSettings, workShift, breakShift } =
-    useSettings();
+  const {
+    workHue,
+    breakHue,
+    updateSettings,
+    workShift,
+    breakShift,
+    autoStart,
+  } = useSettings();
 
   return (
     <section
@@ -105,6 +111,16 @@ export default function SettingsPage() {
                 Reset
               </Button>
             </div>
+          </div>
+          <div className="flex my-6 items-center gap-4">
+            <H3 className="m-0">Auto Start:</H3>
+            <Switch
+              value={autoStart}
+              onChange={(newVal) => {
+                updateSettings({ autoStart: newVal });
+              }}
+              pallet={currentPallet}
+            />
           </div>
         </div>
       </Container>

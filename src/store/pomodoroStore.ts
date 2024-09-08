@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface PomodoroState {
   workShift?: number; // Shift in seconds
+  autoStart?: boolean;
   breakShift?: number; // Shift in seconds
   isRunning: boolean;
   timeLeft: number;
@@ -12,6 +13,7 @@ interface PomodoroState {
   pauseTimer: () => void;
   resetTimer: () => void;
   switchMode: () => void;
+  setAutoStart: (value: boolean) => void;
   tick: () => void;
   updateTimeLeft: (newTime: number) => void;
 }
@@ -20,7 +22,6 @@ export const usePomodoroStore = create<PomodoroState>((set) => ({
   isRunning: false,
   timeLeft: 25 * 60,
   isBreak: false,
-
   setWorkShift: (duration: number) =>
     set((state) => ({
       workShift: duration,
@@ -40,6 +41,7 @@ export const usePomodoroStore = create<PomodoroState>((set) => ({
       isRunning: false,
       isBreak: false,
     })),
+  setAutoStart: (value: boolean) => set({ autoStart: value }),
   switchMode: () =>
     set((state) => ({
       isBreak: !state.isBreak,

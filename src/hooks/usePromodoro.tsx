@@ -21,6 +21,7 @@ export function usePomodoro() {
     updateTimeLeft,
     setWorkShift,
     setBreakShift,
+    autoStart,
   } = usePomodoroStore();
   const { workShift, breakShift } = useSettings();
   const [session, setSession] = useState<Session | null>(null);
@@ -44,7 +45,7 @@ export function usePomodoro() {
         // If timeLeft reaches zero, save the session and start the next one
         if (timeLeft === 1) {
           saveSession();
-          startNextSession();
+          (autoStart || !isBreak) && startNextSession();
         }
       }, 1000);
     } else if (session && session.start && session.end === 0) {
@@ -97,5 +98,6 @@ export function usePomodoro() {
     updateTimeLeft,
     setWorkShift,
     setBreakShift,
+    autoStart,
   };
 }

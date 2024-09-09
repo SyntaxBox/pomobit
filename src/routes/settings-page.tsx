@@ -3,6 +3,7 @@ import { useUI } from "../hooks";
 import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
 import { Button, Container, H3, Hue, Switch, Title } from "../ui";
 import { H4 } from "../ui/h4";
+
 export default function SettingsPage() {
   const { currentPallet, workPallet, breakPallet } = useUI();
   const {
@@ -12,8 +13,8 @@ export default function SettingsPage() {
     workShift,
     breakShift,
     autoStart,
+    isAudioCuesAllowed,
   } = useSettings();
-
   return (
     <section
       style={{
@@ -118,6 +119,16 @@ export default function SettingsPage() {
               value={autoStart}
               onChange={(newVal) => {
                 updateSettings({ autoStart: newVal });
+              }}
+              pallet={currentPallet}
+            />
+          </div>
+          <div className="flex my-6 items-center gap-4">
+            <H3 className="m-0">Audio:</H3>
+            <Switch
+              value={isAudioCuesAllowed}
+              onChange={(newVal) => {
+                updateSettings({ isAudioCuesAllowed: newVal });
               }}
               pallet={currentPallet}
             />

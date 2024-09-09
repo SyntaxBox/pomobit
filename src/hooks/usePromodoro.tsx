@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePomodoroStore } from "../store/";
 import { useSettings } from "./useSettings";
+import { useAudio } from "./useAudio";
 
 interface Session {
   start: number;
@@ -24,24 +25,24 @@ export function usePomodoro() {
     autoStart,
   } = usePomodoroStore();
   const { workShift, breakShift } = useSettings();
+  const { playNotification } = useAudio();
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
     let intervalId: number;
-
     if (isRunning) {
-      // If the timer just started, record the start time
+      // If the timer just started, record the start time and play notification
       if (session === null) {
         setSession({
           start: Date.now(),
           end: 0,
           type: isBreak ? "BREAK" : "WORK",
         });
+        // Play different notifications for break and work sessions
+        playNotification(isBreak ? "breakCue" : "workCue");
       }
-
       intervalId = setInterval(() => {
         tick();
-
         // If timeLeft reaches zero, save the session and start the next one
         if (timeLeft === 1) {
           saveSession();
@@ -54,22 +55,19 @@ export function usePomodoro() {
         prevSession ? { ...prevSession, end: Date.now() } : null,
       );
     }
-
     return () => clearInterval(intervalId);
-  }, [isRunning, timeLeft, session, tick]);
+  }, [isRunning, timeLeft, session, tick, isBreak, playNotification]);
 
   const saveSession = () => {
     if (session) {
       const today = new Date().toISOString().split("T")[0]; // Get today's date as YYYY-MM-DD
       const existingSessions = JSON.parse(localStorage.getItem(today) || "[]");
-
       // Save the session in localStorage
       const updatedSessions = [
         ...existingSessions,
         { start: session.start, end: Date.now(), type: session.type },
       ];
       localStorage.setItem(today, JSON.stringify(updatedSessions));
-
       // Reset the session
       setSession(null);
     }

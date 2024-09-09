@@ -1,18 +1,25 @@
 import { useCallback, useEffect } from "react";
-import { usePomodoroStore, useUIStore } from "../store";
+import { useAudioStore, usePomodoroStore, useUIStore } from "../store";
 import { useLocalStorage } from "./useLocalStorage";
-
+import notification0 from "../assets/audio/notification0.mp3";
+import notification1 from "../assets/audio/notification1.mp3";
 const DEFAULT_WORK_HUE = 99;
 const DEFAULT_BREAK_HUE = 37;
 const DEFAULT_WORK_SHIFT = 25 * 60; // 25 minutes;
 const DEFAULT_BREAK_SHIFT = 5 * 60; // 5 minutes;
 const DEFAULT_AUTO_START = true;
+const DEFAULT_AUDIO_CUES = true;
+const DEFAULT_WORK_CUE = notification0;
+const DEFAULT_BREAK_CUE = notification1;
 export const DEFAULT_SETTINGS = {
   workHue: DEFAULT_WORK_HUE,
   workShift: DEFAULT_WORK_SHIFT,
   breakShift: DEFAULT_BREAK_SHIFT,
   breakHue: DEFAULT_BREAK_HUE,
   autoStart: DEFAULT_AUTO_START,
+  isAudioCuesAllowed: DEFAULT_AUDIO_CUES,
+  workCue: DEFAULT_WORK_CUE,
+  breakCue: DEFAULT_BREAK_CUE,
 };
 
 export function useSettings() {
@@ -25,6 +32,14 @@ export function useSettings() {
     autoStart,
     setAutoStart,
   } = usePomodoroStore();
+  const {
+    isAudioCuesAllowed,
+    setWorkCue,
+    setBreakCue,
+    workCue,
+    breakCue,
+    setIsAudioCuesAllowed,
+  } = useAudioStore();
   const [localSettings, setLocalSettings] = useLocalStorage(
     "settings",
     DEFAULT_SETTINGS,
@@ -42,6 +57,16 @@ export function useSettings() {
     if (autoStart === undefined) {
       setAutoStart(localSettings.autoStart);
     }
+    if (isAudioCuesAllowed === undefined) {
+      setIsAudioCuesAllowed(localSettings.isAudioCuesAllowed);
+    }
+    if (workCue === undefined) {
+      setWorkCue(localSettings.workCue);
+    }
+    if (breakCue === undefined) {
+      setBreakCue(localSettings.breakCue);
+    }
+    console.log(localSettings);
   }, []);
 
   const updateSettings = useCallback(
@@ -62,6 +87,15 @@ export function useSettings() {
       if (updates.autoStart !== undefined) {
         setAutoStart(updates.autoStart);
       }
+      if (updates.isAudioCuesAllowed !== undefined) {
+        setIsAudioCuesAllowed(updates.isAudioCuesAllowed);
+      }
+      if (updates.workCue !== undefined) {
+        setWorkCue(updates.workCue);
+      }
+      if (updates.breakCue !== undefined) {
+        setBreakCue(updates.breakCue);
+      }
     },
 
     [setLocalSettings],
@@ -72,6 +106,9 @@ export function useSettings() {
     workShift: workShift ?? DEFAULT_WORK_SHIFT,
     breakShift: breakShift ?? DEFAULT_BREAK_SHIFT,
     autoStart: autoStart ?? DEFAULT_AUTO_START,
+    isAudioCuesAllowed: isAudioCuesAllowed ?? DEFAULT_AUDIO_CUES,
+    workCue: workCue ?? DEFAULT_WORK_CUE,
+    breakCue: breakCue ?? DEFAULT_BREAK_CUE,
     localSettings,
     updateSettings,
   };

@@ -1,7 +1,7 @@
 import { TimeInput } from "../components/time-input";
 import { useUI } from "../hooks";
 import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
-import { Button, Container, H3, Hue, Switch, Title } from "../ui";
+import { Button, Container, FileInput, H3, Hue, Switch, Title } from "../ui";
 import { H4 } from "../ui/h4";
 
 export default function SettingsPage() {
@@ -132,6 +132,15 @@ export default function SettingsPage() {
               }}
               pallet={currentPallet}
             />
+          </div>
+          <div>
+            <div>
+              <H4>Work Cue</H4>
+              <FileInput pallet={currentPallet} />
+            </div>
+            <div>
+              <H4>Break Cue</H4>
+            </div>
           </div>
         </div>
       </Container>

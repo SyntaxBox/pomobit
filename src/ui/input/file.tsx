@@ -1,16 +1,17 @@
 import React from "react";
 import { Upload } from "lucide-react";
-import { useUI } from "../../hooks";
 import { ColorUtils } from "../../lib/utils";
 
 export const FileInput = ({
   fileName = "No file chosen",
   onChange,
   pallet,
+  fileType = "*",
 }: {
   onChange: (file: File) => void;
   pallet: ColorUtils.ColorPallet;
   fileName?: string;
+  fileType?: string; // Accept file type, e.g., 'image/*', '.pdf', '.txt'
 }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -44,6 +45,7 @@ export const FileInput = ({
           id="dropzone-file"
           type="file"
           className="hidden"
+          accept={fileType} // Restrict file type based on the prop
           onChange={handleFileChange}
         />
       </label>

@@ -66,7 +66,6 @@ export function useSettings() {
     if (breakCue === undefined) {
       setBreakCue(localSettings.breakCue);
     }
-    console.log(localSettings);
   }, []);
 
   const updateSettings = useCallback(

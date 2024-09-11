@@ -1,7 +1,8 @@
+import { AudioInput } from "../components";
 import { TimeInput } from "../components/time-input";
 import { useUI } from "../hooks";
 import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
-import { Button, Container, FileInput, H3, Hue, Switch, Title } from "../ui";
+import { Button, Container, H3, Hue, Switch, Title } from "../ui";
 import { H4 } from "../ui/h4";
 
 export default function SettingsPage() {
@@ -14,6 +15,8 @@ export default function SettingsPage() {
     breakShift,
     autoStart,
     isAudioCuesAllowed,
+    workCue,
+    breakCue,
   } = useSettings();
   return (
     <section
@@ -136,10 +139,45 @@ export default function SettingsPage() {
           <div>
             <div>
               <H4>Work Cue</H4>
-              <FileInput pallet={currentPallet} />
+              <div className="flex gap-2">
+                <AudioInput
+                  pallet={workPallet}
+                  buffer={workCue}
+                  onChange={(newCue) => updateSettings({ workCue: newCue })}
+                />
+                <Button
+                  pallet={workPallet}
+                  className="p-2"
+                  onClick={() =>
+                    updateSettings({
+                      workCue: DEFAULT_SETTINGS.workCue,
+                    })
+                  }
+                >
+                  Reset
+                </Button>
+              </div>
             </div>
             <div>
               <H4>Break Cue</H4>
+              <div className="flex gap-2">
+                <AudioInput
+                  pallet={breakPallet}
+                  buffer={breakCue}
+                  onChange={(newCue) => updateSettings({ breakCue: newCue })}
+                />
+                <Button
+                  pallet={breakPallet}
+                  className="p-2"
+                  onClick={() =>
+                    updateSettings({
+                      breakCue: DEFAULT_SETTINGS.breakCue,
+                    })
+                  }
+                >
+                  Reset
+                </Button>
+              </div>
             </div>
           </div>
         </div>

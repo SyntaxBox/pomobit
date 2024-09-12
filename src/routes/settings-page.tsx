@@ -17,6 +17,7 @@ export default function SettingsPage() {
     isAudioCuesAllowed,
     workCue,
     breakCue,
+    isNotificationEnabled,
     DEFAULT_SETTINGS,
   } = useSettings();
   return (
@@ -128,7 +129,17 @@ export default function SettingsPage() {
             />
           </div>
           <div className="flex my-6 items-center gap-4">
-            <H3 className="m-0">Audio:</H3>
+            <H3 className="m-0">Enable Notifications:</H3>
+            <Switch
+              value={isNotificationEnabled}
+              onChange={(newVal) => {
+                updateSettings({ isNotificationEnabled: newVal });
+              }}
+              pallet={currentPallet}
+            />
+          </div>
+          <div className="flex my-6 items-center gap-4">
+            <H3 className="m-0">Enable Audio:</H3>
             <Switch
               value={isAudioCuesAllowed}
               onChange={(newVal) => {

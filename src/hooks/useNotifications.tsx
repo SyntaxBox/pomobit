@@ -1,12 +1,5 @@
 import { useSettings } from "./useSettings";
 
-interface NotificationOptions {
-  body?: string;
-  icon?: string;
-  tag?: string;
-  data?: any;
-}
-
 export function useNotifications() {
   const { isNotificationEnabled, notificationPermission, updateSettings } =
     useSettings();
@@ -25,11 +18,15 @@ export function useNotifications() {
     }
   };
 
-  const sendNotification = async (
-    title: string,
-    options: NotificationOptions = {},
-  ) => {
-    if (isNotificationEnabled) {
+  const sendNotification = async ({
+    title,
+    ...args
+  }: {
+    title: string;
+    body?: string;
+    tag?: string;
+  }) => {
+    if (!isNotificationEnabled) {
       console.warn("Notification disabled");
       return;
     }
@@ -39,7 +36,11 @@ export function useNotifications() {
     }
 
     try {
-      new Notification(title, options);
+      new Notification(title, {
+        ...args,
+        icon: "./icon.svg",
+        badge: "./icon.svg",
+      });
     } catch (error) {
       console.error("Error sending notification:", error);
     }

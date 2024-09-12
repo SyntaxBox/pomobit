@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { usePomodoroStore } from "../store/";
 import { useSettings } from "./useSettings";
 import { useAudio } from "./useAudio";
+import { useNotifications } from "./useNotifications";
 
 interface Session {
   start: number;
@@ -17,15 +18,11 @@ export function usePomodoro() {
     timeLeft,
     isBreak,
     switchMode,
-    pauseTimer,
-    resetTimer,
-    updateTimeLeft,
-    setWorkShift,
-    setBreakShift,
     autoStart,
   } = usePomodoroStore();
-  const { workShift, breakShift } = useSettings();
+  const { workShift, breakShift, isNotificationEnabled } = useSettings();
   const { playNotification } = useAudio();
+  const { sendNotification } = useNotifications();
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -40,6 +37,13 @@ export function usePomodoro() {
         });
         // Play different notifications for break and work sessions
         playNotification(isBreak ? "breakCue" : "workCue");
+        //
+        isNotificationEnabled &&
+          sendNotification({
+            title: "Shift Finished",
+            body: isBreak ? "Break time!" : "Time to work!",
+            tag: "shift-finished",
+          });
       }
       intervalId = setInterval(() => {
         tick();
@@ -84,18 +88,5 @@ export function usePomodoro() {
 
   return {
     getGradientPercentage,
-    isRunning,
-    startTimer,
-    timeLeft,
-    isBreak,
-    workShift,
-    breakShift,
-    switchMode,
-    pauseTimer,
-    resetTimer,
-    updateTimeLeft,
-    setWorkShift,
-    setBreakShift,
-    autoStart,
   };
 }

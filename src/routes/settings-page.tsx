@@ -1,7 +1,7 @@
 import { AudioInput } from "../components";
 import { TimeInput } from "../components/time-input";
 import { useUI } from "../hooks";
-import { DEFAULT_SETTINGS, useSettings } from "../hooks/useSettings";
+import { useSettings } from "../hooks/useSettings";
 import { Button, Container, H3, Hue, Switch, Title } from "../ui";
 import { H4 } from "../ui/h4";
 
@@ -17,6 +17,7 @@ export default function SettingsPage() {
     isAudioCuesAllowed,
     workCue,
     breakCue,
+    DEFAULT_SETTINGS,
   } = useSettings();
   return (
     <section

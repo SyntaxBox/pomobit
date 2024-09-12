@@ -1,5 +1,10 @@
 import { useCallback, useEffect } from "react";
-import { useAudioStore, usePomodoroStore, useUIStore } from "../store";
+import {
+  useAudioStore,
+  useNotificationStore,
+  usePomodoroStore,
+  useUIStore,
+} from "../store";
 import { useLocalStorage } from "./useLocalStorage";
 import notification0 from "../assets/audio/notification0.mp3";
 import notification1 from "../assets/audio/notification1.mp3";
@@ -11,7 +16,10 @@ const DEFAULT_AUTO_START = true;
 const DEFAULT_AUDIO_CUES = true;
 const DEFAULT_WORK_CUE = notification0;
 const DEFAULT_BREAK_CUE = notification1;
-export const DEFAULT_SETTINGS = {
+let DEFAULT_NOTIFICATION_PERMISSION = "default";
+const DEFAULT_NOTIFICATION_ENABLED = true;
+
+const DEFAULT_SETTINGS = {
   workHue: DEFAULT_WORK_HUE,
   workShift: DEFAULT_WORK_SHIFT,
   breakShift: DEFAULT_BREAK_SHIFT,
@@ -20,6 +28,9 @@ export const DEFAULT_SETTINGS = {
   isAudioCuesAllowed: DEFAULT_AUDIO_CUES,
   workCue: DEFAULT_WORK_CUE,
   breakCue: DEFAULT_BREAK_CUE,
+  notificationPermission:
+    DEFAULT_NOTIFICATION_PERMISSION as NotificationPermission,
+  isNotificationEnabled: DEFAULT_NOTIFICATION_ENABLED,
 };
 
 export function useSettings() {
@@ -32,6 +43,7 @@ export function useSettings() {
     autoStart,
     setAutoStart,
   } = usePomodoroStore();
+
   const {
     isAudioCuesAllowed,
     setWorkCue,
@@ -40,6 +52,14 @@ export function useSettings() {
     breakCue,
     setIsAudioCuesAllowed,
   } = useAudioStore();
+
+  const {
+    setNotificationPermission,
+    notificationPermission,
+    isNotificationEnabled,
+    setIsNotificationEnabled,
+  } = useNotificationStore();
+
   const [localSettings, setLocalSettings] = useLocalStorage(
     "settings",
     DEFAULT_SETTINGS,
@@ -65,6 +85,12 @@ export function useSettings() {
     }
     if (breakCue === undefined) {
       setBreakCue(localSettings.breakCue);
+    }
+    if (notificationPermission === undefined) {
+      setNotificationPermission(localSettings.notificationPermission);
+    }
+    if (isNotificationEnabled === undefined) {
+      setIsNotificationEnabled(localSettings.isNotificationEnabled);
     }
   }, []);
 
@@ -95,6 +121,12 @@ export function useSettings() {
       if (updates.breakCue !== undefined) {
         setBreakCue(updates.breakCue);
       }
+      if (updates.notificationPermission !== undefined) {
+        setNotificationPermission(updates.notificationPermission);
+      }
+      if (updates.isNotificationEnabled !== undefined) {
+        setIsNotificationEnabled(updates.isNotificationEnabled);
+      }
     },
 
     [setLocalSettings],
@@ -108,7 +140,12 @@ export function useSettings() {
     isAudioCuesAllowed: isAudioCuesAllowed ?? DEFAULT_AUDIO_CUES,
     workCue: workCue ?? DEFAULT_WORK_CUE,
     breakCue: breakCue ?? DEFAULT_BREAK_CUE,
+    notificationPermission:
+      notificationPermission ?? DEFAULT_NOTIFICATION_PERMISSION,
+    isNotificationEnabled:
+      isNotificationEnabled ?? DEFAULT_NOTIFICATION_ENABLED,
     localSettings,
     updateSettings,
+    DEFAULT_SETTINGS,
   };
 }

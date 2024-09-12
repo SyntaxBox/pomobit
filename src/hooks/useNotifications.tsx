@@ -7,7 +7,7 @@ interface NotificationOptions {
   data?: any;
 }
 
-export function useNotification() {
+export function useNotifications() {
   const { isNotificationEnabled, notificationPermission, updateSettings } =
     useSettings();
 

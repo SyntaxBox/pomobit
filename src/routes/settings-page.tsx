@@ -18,6 +18,7 @@ export default function SettingsPage() {
     workCue,
     breakCue,
     isNotificationEnabled,
+    isVisionHealthEnabled,
     DEFAULT_SETTINGS,
   } = useSettings();
   return (
@@ -138,6 +139,18 @@ export default function SettingsPage() {
               pallet={currentPallet}
             />
           </div>
+
+          <div className="flex my-6 items-center gap-4">
+            <H3 className="m-0">Enable Vision Health Notifications:</H3>
+            <Switch
+              value={isVisionHealthEnabled}
+              onChange={(newVal) => {
+                updateSettings({ isVisionHealthEnabled: newVal });
+              }}
+              pallet={currentPallet}
+            />
+          </div>
+          <p className="-mt-8 opacity-60">(20 20 20 Rule)</p>
           <div className="flex my-6 items-center gap-4">
             <H3 className="m-0">Enable Audio:</H3>
             <Switch

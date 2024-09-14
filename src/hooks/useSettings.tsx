@@ -4,6 +4,7 @@ import {
   useNotificationStore,
   usePomodoroStore,
   useUIStore,
+  useVisionHealthStore,
 } from "../store";
 import { useLocalStorage } from "./useLocalStorage";
 import notification0 from "../assets/audio/notification0.mp3";
@@ -16,8 +17,9 @@ const DEFAULT_AUTO_START = true;
 const DEFAULT_AUDIO_CUES = true;
 const DEFAULT_WORK_CUE = notification0;
 const DEFAULT_BREAK_CUE = notification1;
-let DEFAULT_NOTIFICATION_PERMISSION = "default";
-const DEFAULT_NOTIFICATION_ENABLED = true;
+const DEFAULT_NOTIFICATION_PERMISSION = "default";
+const DEFAULT_IS_NOTIFICATION_ENABLED = true;
+const DEFAULT_IS_VISION_HEALTH_ENABLED = true;
 
 const DEFAULT_SETTINGS = {
   workHue: DEFAULT_WORK_HUE,
@@ -30,7 +32,8 @@ const DEFAULT_SETTINGS = {
   breakCue: DEFAULT_BREAK_CUE,
   notificationPermission:
     DEFAULT_NOTIFICATION_PERMISSION as NotificationPermission,
-  isNotificationEnabled: DEFAULT_NOTIFICATION_ENABLED,
+  isNotificationEnabled: DEFAULT_IS_NOTIFICATION_ENABLED,
+  isVisionHealthEnabled: DEFAULT_IS_VISION_HEALTH_ENABLED,
 };
 
 export function useSettings() {
@@ -60,6 +63,8 @@ export function useSettings() {
     setIsNotificationEnabled,
   } = useNotificationStore();
 
+  const { isVisionHealthEnabled, setIsVisionHealthEnabled } =
+    useVisionHealthStore();
   const [localSettings, setLocalSettings] = useLocalStorage(
     "settings",
     DEFAULT_SETTINGS,
@@ -91,6 +96,9 @@ export function useSettings() {
     }
     if (isNotificationEnabled === undefined) {
       setIsNotificationEnabled(localSettings.isNotificationEnabled);
+    }
+    if (isVisionHealthEnabled === undefined) {
+      setIsVisionHealthEnabled(localSettings.isVisionHealthEnabled);
     }
   }, []);
 
@@ -127,6 +135,9 @@ export function useSettings() {
       if (updates.isNotificationEnabled !== undefined) {
         setIsNotificationEnabled(updates.isNotificationEnabled);
       }
+      if (updates.isVisionHealthEnabled !== undefined) {
+        setIsVisionHealthEnabled(updates.isVisionHealthEnabled);
+      }
     },
 
     [setLocalSettings],
@@ -143,7 +154,9 @@ export function useSettings() {
     notificationPermission:
       notificationPermission ?? DEFAULT_NOTIFICATION_PERMISSION,
     isNotificationEnabled:
-      isNotificationEnabled ?? DEFAULT_NOTIFICATION_ENABLED,
+      isNotificationEnabled ?? DEFAULT_IS_NOTIFICATION_ENABLED,
+    isVisionHealthEnabled:
+      isVisionHealthEnabled ?? DEFAULT_IS_VISION_HEALTH_ENABLED,
     localSettings,
     updateSettings,
     DEFAULT_SETTINGS,

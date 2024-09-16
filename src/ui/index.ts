@@ -1,4 +1,5 @@
 export * from "./clock";
+export * from "./link-button";
 export * from "./input";
 export * from "./button";
 export * from "./title";

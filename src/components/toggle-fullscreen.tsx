@@ -8,7 +8,7 @@ export function ToggleFullscreen() {
   return (
     <Button
       title="Toggle Fullscreen"
-      className="cursor-pointer p-2 w-fit bg-none"
+      className="cursor-pointer p-2 w-fit"
       pallet={currentPallet}
       onClick={toggleFullscreen}
     >

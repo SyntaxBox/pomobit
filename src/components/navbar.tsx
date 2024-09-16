@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useUI } from "../hooks";
+import { Link } from "react-router-dom";
+import { useFullscreen, useUI } from "../hooks";
 import { Button, LinkButton, Container } from "../ui";
 import github from "../assets/images/github.svg";
 import {
@@ -16,7 +16,14 @@ import { ToggleFullscreen } from "./toggle-fullscreen";
 
 export function Navbar() {
   const { currentPallet } = useUI();
-  const navigate = useNavigate();
+  const { isFullscreen } = useFullscreen();
+  if (isFullscreen) {
+    return (
+      <nav className="absolute top-8 left-8">
+        <ToggleFullscreen />
+      </nav>
+    );
+  }
   return (
     <nav
       style={{
@@ -54,15 +61,15 @@ export function Navbar() {
           <LinkButton
             title="Read More About the Project"
             pallet={currentPallet}
-            to="/"
+            to="https:blog.syntaxbox.dev/pomobit"
           >
             <BookText />
           </LinkButton>
 
           <LinkButton
-            title="Read More About the Project"
+            title="Github repository"
             pallet={currentPallet}
-            to="/"
+            to="https://github.com/SyntaxBox/pomobit"
           >
             <img src={github} alt="github icon" className="w-6 h-6" />
           </LinkButton>

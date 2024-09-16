@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePomodoroStore } from "../store/";
+import { usePomodoroStore } from "../stores";
 import { useSettings } from "./useSettings";
 import { useAudio } from "./useAudio";
 import { useNotifications } from "./useNotifications";

@@ -5,7 +5,7 @@ import {
   usePomodoroStore,
   useUIStore,
   useVisionHealthStore,
-} from "../store";
+} from "../stores";
 import { useLocalStorage } from "./useLocalStorage";
 import notification0 from "../assets/audio/notification0.mp3";
 import notification1 from "../assets/audio/notification1.mp3";

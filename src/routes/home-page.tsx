@@ -1,7 +1,7 @@
 import { PauseButton, ResetButton } from "../components";
 import { PomodoroClock } from "../components/pomodoro-clock";
 import { usePomodoro, useUI } from "../hooks";
-import { usePomodoroStore } from "../store";
+import { usePomodoroStore } from "../stores";
 
 export default function HomePage() {
   const { workPallet, breakPallet } = useUI();

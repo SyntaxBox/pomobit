@@ -1,5 +1,5 @@
 import { useCallback, useRef, useEffect } from "react";
-import { useAudioStore } from "../store";
+import { useAudioStore } from "../stores";
 
 export function useAudio() {
   const { workCue, breakCue, isAudioCuesAllowed, isPlaying, setIsPlaying } =

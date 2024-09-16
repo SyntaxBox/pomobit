@@ -1,5 +1,5 @@
 import { ColorUtils } from "../lib/utils";
-import { usePomodoroStore } from "../store";
+import { usePomodoroStore } from "../stores";
 import { useSettings } from "./useSettings";
 
 export function useUI() {

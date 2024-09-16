@@ -1,6 +1,6 @@
 import { useUI } from "../hooks";
 import { TimeUtils } from "../lib/utils";
-import { usePomodoroStore } from "../store";
+import { usePomodoroStore } from "../stores";
 import { Clock } from "../ui";
 
 export function PomodoroClock() {

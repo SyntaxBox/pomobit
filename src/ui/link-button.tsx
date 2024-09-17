@@ -12,7 +12,7 @@ export function LinkButton({
 }) {
   return (
     <Link to={to}>
-      <Button className={cn("p-2")} {...rest} />
+      <Button className={cn("p-1 md:p-2")} {...rest} />
     </Link>
   );
 }

@@ -14,7 +14,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "p-3 rounded-md flex items-center justify-center z-10",
+        "p-1 md:p-2 rounded-md flex items-center justify-center z-10",
         className,
       )}
       style={{

@@ -40,7 +40,7 @@ export function Navbar() {
           style={{
             color: currentPallet.text1,
           }}
-          className="flex items-center gap-3 text-lg font-meduim"
+          className="flex items-center gap-1 sm:gap-3 text-lg font-meduim"
         >
           <LinkButton pallet={currentPallet} to="/settings">
             <Bolt />
@@ -56,7 +56,7 @@ export function Navbar() {
           style={{
             color: currentPallet.text1,
           }}
-          className="flex items-center gap-3 text-lg font-meduim"
+          className="flex items-center gap-1 sm:gap-3 text-lg font-meduim"
         >
           <LinkButton
             title="Read More About the Project"
@@ -88,7 +88,7 @@ function ToggleNotifications() {
       onClick={() =>
         updateSettings({ isNotificationEnabled: !isNotificationEnabled })
       }
-      className="cursor-pointer p-2"
+      className="cursor-pointer"
       title="Toggle Notifications"
     >
       {isNotificationEnabled ? <BellRing /> : <BellOff />}
@@ -106,7 +106,7 @@ function ToggleSound() {
       onClick={() =>
         updateSettings({ isAudioCuesAllowed: !isAudioCuesAllowed })
       }
-      className="cursor-pointer p-2"
+      className="cursor-pointer"
       title="Toggle Sound"
     >
       {isAudioCuesAllowed ? <Volume2 /> : <VolumeOff />}

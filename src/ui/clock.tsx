@@ -1,3 +1,4 @@
+import React from "react";
 import { ColorUtils } from "../lib/utils";
 
 export function Clock({
@@ -14,23 +15,21 @@ export function Clock({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full overflow-hidden">
       <span
-        className="text-[256px] font-bold"
+        className="text-[256px] font-bold leading-[0.8] w-full text-center"
         style={{
           color: pallet.text1,
-          width: "2ch",
-          lineHeight: 0.8,
+          fontSize: "min(70vw, 256px)",
         }}
       >
         {minutes.toString().padStart(2, "0")}
       </span>
       <span
-        className="text-[256px] opacity-80 font-bold"
+        className="text-[256px] font-bold leading-[0.8] opacity-80 w-full text-center"
         style={{
           color: pallet.text2,
-          width: "2ch",
-          lineHeight: 0.8,
+          fontSize: "min(70vw, 256px)",
         }}
       >
         {seconds.toString().padStart(2, "0")}

@@ -5,3 +5,4 @@ export * from "./time-input";
 export * from "./audio-input";
 export * from "./toggle-fullscreen";
 export * from "./heat-calendar";
+export * from "./charts";

@@ -1,6 +1,12 @@
 import { Container, H2 } from "../ui";
 import { useUI } from "../hooks";
-import { HeatCalendar } from "../components";
+import {
+  HeatCalendar,
+  SessionsChart,
+  TimeChart,
+  CumulativeTimeChart,
+  SessionDurationScatterChart,
+} from "../components";
 import { Session } from "../stores";
 export default function StatsPage() {
   const { currentPallet } = useUI();
@@ -52,6 +58,17 @@ export default function StatsPage() {
             count: sessions.filter((session) => session.type === "WORK").length,
           }))}
         />
+        <h2>Sessions Chart</h2>
+        <SessionsChart data={data} />
+
+        <h2>Time Chart</h2>
+        <TimeChart data={data} />
+
+        <h2>Cumulative Time Chart</h2>
+        <CumulativeTimeChart data={data} />
+
+        <h2>Session Duration Scatter Chart</h2>
+        <SessionDurationScatterChart data={data} />
       </Container>
     </section>
   );

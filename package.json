@@ -10,13 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/react-calendar-heatmap": "^1.6.7",
+    "@uiw/react-heat-map": "^2.2.2",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "lucide-react": "^0.436.0",
     "postcss": "^8.4.41",
     "react": "^18.3.1",
-    "react-calendar-heatmap": "^1.9.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "tailwind-merge": "^2.5.2",

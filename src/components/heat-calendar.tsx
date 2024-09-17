@@ -32,8 +32,8 @@ export function HeatCalendar({
     setTooltip({
       visible: true,
       data,
-      x: rect.left + window.scrollX + rect.width / 2,
-      y: rect.top + window.scrollY - 10,
+      x: rect.left + window.scrollX + rect.width / 2 - 100,
+      y: rect.top + window.scrollY - 50,
     });
   };
 
@@ -45,15 +45,13 @@ export function HeatCalendar({
     ColorUtils.generateShades(pallet.original, 10).map((c, i) => [3 * i, c]),
   );
   return (
-    <div
-      className="relative mx-auto flex-grow"
-      style={{ background: pallet.background + "90" }}
-    >
+    <div className="relative">
       <HeatMap
         value={data}
         legendCellSize={0}
         width={1200}
         rectSize={20}
+        className="mx-auto"
         panelColors={shadesRecord}
         startDate={new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)}
         endDate={new Date(Date.now())}
@@ -77,8 +75,8 @@ export function HeatCalendar({
             position: "absolute",
             left: tooltip.x,
             top: tooltip.y,
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-            color: "white",
+            backgroundColor: pallet.background2,
+            color: pallet.text1,
             padding: "5px 10px",
             borderRadius: "4px",
             fontSize: "12px",

@@ -1,15 +1,40 @@
-import CalendarHeatmap from "react-calendar-heatmap";
-import "react-calendar-heatmap/dist/styles.css";
 import { Container, H2 } from "../ui";
 import { useUI } from "../hooks";
-const contributions = [
-  { date: "2023-01-01", count: 2 },
-  { date: "2023-01-02", count: 4 },
-  { date: "2023-01-03", count: 1 },
-  // ...add more dates
-];
+import { HeatCalendar } from "../components";
+import { Session } from "../stores";
 export default function StatsPage() {
   const { currentPallet } = useUI();
+
+  function getLocalStorageDateItems(): Record<string, Session[]> {
+    // Get all keys from localStorage
+    const allKeys = Object.keys(localStorage);
+
+    // Filter keys that are valid dates
+    const dateKeys = allKeys.filter((key) => {
+      const date = new Date(key);
+      return date instanceof Date && !isNaN(date.getTime());
+    });
+
+    // Create an object with date keys and their values
+    const dateItems: Record<string, Session[]> = {};
+    dateKeys.forEach((key) => {
+      if (!key) return;
+      const item = localStorage.getItem(key);
+      if (!item) return;
+      try {
+        const parsedItem = JSON.parse(item) as Session[];
+        if (Array.isArray(parsedItem)) {
+          dateItems[key] = parsedItem;
+        }
+      } catch (error) {
+        console.error(`Error parsing item for key ${key}:`, error);
+      }
+    });
+
+    return dateItems;
+  }
+
+  const data = getLocalStorageDateItems();
   return (
     <section
       style={{
@@ -20,21 +45,12 @@ export default function StatsPage() {
     >
       <Container as="div">
         <H2>Your Contributions</H2>
-        <CalendarHeatmap
-          startDate={new Date("2023-01-01")}
-          endDate={new Date("2023-12-31")}
-          values={contributions}
-          classForValue={(value) => {
-            if (!value) return "color-empty";
-            // Map intensity to a CSS class for color
-            return `color-scale-${value.count}`;
-          }}
-          tooltipDataAttrs={(value) => ({
-            "data-tip": value
-              ? `${value.date}: ${value.count} contributions`
-              : "No contributions",
-          })}
-          showWeekdayLabels
+        <HeatCalendar
+          pallet={currentPallet}
+          data={Object.entries(data).map(([date, sessions]) => ({
+            date,
+            count: sessions.filter((session) => session.type === "WORK").length,
+          }))}
         />
       </Container>
     </section>

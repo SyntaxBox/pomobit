@@ -1,5 +1,11 @@
 import { create } from "zustand";
 
+export interface Session {
+  start: number;
+  end: number;
+  type: "BREAK" | "WORK";
+}
+
 interface PomodoroState {
   workShift?: number; // Shift in seconds
   autoStart?: boolean;

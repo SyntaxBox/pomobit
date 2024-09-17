@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import { usePomodoroStore } from "../stores";
+import { usePomodoroStore, Session } from "../stores";
 import { useSettings } from "./useSettings";
 import { useAudio } from "./useAudio";
 import { useNotifications } from "./useNotifications";
-
-interface Session {
-  start: number;
-  end: number;
-  type: "BREAK" | "WORK";
-}
 
 export function usePomodoro() {
   const {

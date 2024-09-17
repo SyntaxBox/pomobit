@@ -28,6 +28,7 @@ export function generateColorPalette(hexColor: string) {
   const hsv = rgbToHsv(rgb);
 
   // Generate colors
+  const original = rgbToHex(rgb);
   const primary1 = rgbToHex(hsvToRgb(hsv));
   const primary2 = rgbToHex(hsvToRgb([(hsv[0] + 0.1) % 1, hsv[1], hsv[2]]));
   const secondary = rgbToHex(hsvToRgb([(hsv[0] + 0.5) % 1, hsv[1], hsv[2]]));
@@ -41,6 +42,7 @@ export function generateColorPalette(hexColor: string) {
   const text2 = rgbToHex(hsvToRgb([hsv[0], 0.6, 0.4]));
 
   return {
+    original,
     primary1,
     primary2,
     secondary,
@@ -255,4 +257,26 @@ export function hsvToHex(h: number, s: number, v: number) {
   let bHex = b.toString(16).padStart(2, "0");
 
   return `#${rHex}${gHex}${bHex}`;
+}
+
+export function generateShades(hexColor: string, numShades: number): string[] {
+  // Convert hex to HSV
+  const { h } = hexToHsv(hexColor);
+
+  // Calculate step size for saturation and value
+  const step = 1 / (numShades - 1);
+
+  // Generate shades
+  const shades = [];
+  for (let i = 0; i < numShades; i++) {
+    // Interpolate saturation from 10% to 100%
+    const newS = 10 + 90 * i * step;
+    // Interpolate value from 95% (very light) to 20% (very dark)
+    const newV = 95 - 75 * i * step;
+    // Convert back to hex
+    const shade = hsvToHex(h, newS, newV);
+    shades.push(shade);
+  }
+
+  return shades;
 }

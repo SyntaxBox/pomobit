@@ -42,10 +42,10 @@ export function Navbar() {
           }}
           className="flex items-center gap-1 sm:gap-3 text-lg font-meduim"
         >
-          <LinkButton pallet={currentPallet} to="/settings">
+          <LinkButton title="Settings" pallet={currentPallet} to="/settings">
             <Bolt />
           </LinkButton>
-          <LinkButton pallet={currentPallet} to="/stats">
+          <LinkButton title="Statistics" pallet={currentPallet} to="/stats">
             <ChartNoAxesCombined />
           </LinkButton>
           <ToggleSound />

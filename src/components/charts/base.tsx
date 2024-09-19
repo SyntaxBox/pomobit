@@ -6,16 +6,6 @@ import { Session } from "../../stores";
 export type SessionData = Record<string, Session[]>;
 export type ChartType = "bar" | "area";
 
-export interface ChartBaseProps {
-  data: SessionData;
-  renderChart: (
-    filteredData: SessionData,
-    chartType: ChartType,
-    workFill: string,
-    breakFill: string,
-  ) => React.ReactElement;
-}
-
 const timeSpans: Record<string, number> = {
   "1 week": 7,
   "2 weeks": 14,
@@ -31,7 +21,18 @@ const chartTypes: Record<string, ChartType> = {
   "Area Chart": "area",
 };
 
-const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
+export function ChartBase({
+  data,
+  renderChart,
+}: {
+  data: SessionData;
+  renderChart: (
+    filteredData: SessionData,
+    chartType: ChartType,
+    workFill: string,
+    breakFill: string,
+  ) => React.ReactElement;
+}) {
   const { workPallet, breakPallet, currentPallet } = useUI();
   const [timeSpan, setTimeSpan] = useState<string>("1 month");
   const [chartType, setChartType] = useState<string>("Bar Chart");
@@ -43,16 +44,27 @@ const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
-    return Object.entries(data)
-      .filter(([date]) => new Date(date) >= cutoffDate)
-      .reduce<SessionData>((acc, [date, sessions]) => {
-        acc[date] = sessions.filter(
+    const result: SessionData = {};
+    for (
+      let d = new Date(cutoffDate);
+      d <= new Date();
+      d.setDate(d.getDate() + 1)
+    ) {
+      const dateString = d.toISOString().split("T")[0];
+      result[dateString] = [];
+    }
+
+    Object.entries(data).forEach(([date, sessions]) => {
+      if (new Date(date) >= cutoffDate) {
+        result[date] = sessions.filter(
           (session) =>
             (showWork && session.type === "WORK") ||
             (showBreak && session.type === "BREAK"),
         );
-        return acc;
-      }, {});
+      }
+    });
+
+    return result;
   };
 
   const filteredData = filterData();
@@ -66,7 +78,6 @@ const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
           value={timeSpan}
           onChange={(e) => setTimeSpan(e[0])}
         />
-
         <Select
           pallet={currentPallet}
           options={chartTypes}
@@ -108,7 +119,4 @@ const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
       )}
     </div>
   );
-};
-
-export default ChartBase;
-export type { SessionData, Session };
+}

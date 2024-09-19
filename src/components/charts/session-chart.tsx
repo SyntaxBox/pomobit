@@ -1,6 +1,7 @@
 import React from "react";
 import ChartBase, { SessionData } from "./base";
 import { Charts } from "./charts";
+import { TimeUtils } from "../../lib/utils";
 
 interface ChartProps {
   data: SessionData;
@@ -20,11 +21,13 @@ export const SessionsChart: React.FC<ChartProps> = ({ data }) => {
     breakFill: string,
   ) => {
     const chartData: SessionChartData[] = Object.entries(filteredData).map(
-      ([date, sessions]) => ({
-        date,
-        work: sessions.filter((s) => s.type === "WORK").length,
-        break: sessions.filter((s) => s.type === "BREAK").length,
-      }),
+      ([date, sessions]) => {
+        return {
+          date: TimeUtils.simpleFormatDate(date),
+          work: sessions.filter((s) => s.type === "WORK").length,
+          break: sessions.filter((s) => s.type === "BREAK").length,
+        };
+      },
     );
 
     if (chartType === "bar") {

@@ -1,3 +1,4 @@
+import { TimeUtils } from "../../lib/utils";
 import ChartBase, { ChartType, SessionData } from "./base";
 import { Charts } from "./charts";
 
@@ -19,17 +20,19 @@ export const TimeChart: React.FC<ChartProps> = ({ data }) => {
     breakFill: string,
   ) => {
     const chartData: TimeChartData[] = Object.entries(filteredData).map(
-      ([date, sessions]) => ({
-        date,
-        work:
-          sessions
-            .filter((s) => s.type === "WORK")
-            .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
-        break:
-          sessions
-            .filter((s) => s.type === "BREAK")
-            .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
-      }),
+      ([date, sessions]) => {
+        return {
+          date: TimeUtils.simpleFormatDate(date),
+          work:
+            sessions
+              .filter((s) => s.type === "WORK")
+              .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
+          break:
+            sessions
+              .filter((s) => s.type === "BREAK")
+              .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
+        };
+      },
     );
 
     if (chartType === "bar") {

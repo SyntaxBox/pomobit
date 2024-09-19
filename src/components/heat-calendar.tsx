@@ -1,6 +1,6 @@
 import { useState, MouseEvent } from "react";
 import HeatMap, { HeatMapValue } from "@uiw/react-heat-map";
-import { ColorUtils } from "../lib/utils";
+import { ColorUtils, TimeUtils } from "../lib/utils";
 
 // Define the structure of the tooltip data
 interface TooltipState {
@@ -85,7 +85,8 @@ export function HeatCalendar({
             whiteSpace: "nowrap",
           }}
         >
-          {tooltip.data?.date}: {tooltip.data?.count || 0} Work Shifts
+          {tooltip.data && TimeUtils.simpleFormatDate(tooltip.data.date)}:{" "}
+          {tooltip.data?.count || 0} Work Shifts
         </div>
       )}
     </div>

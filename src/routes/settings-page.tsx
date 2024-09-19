@@ -88,7 +88,7 @@ export default function SettingsPage() {
                 onChange={(time) => updateSettings({ workShift: time })}
               />
               <Button
-                pallet={currentPallet}
+                pallet={workPallet}
                 className="p-2"
                 onClick={() =>
                   updateSettings({
@@ -106,7 +106,7 @@ export default function SettingsPage() {
                 onChange={(time) => updateSettings({ breakShift: time })}
               />
               <Button
-                pallet={currentPallet}
+                pallet={breakPallet}
                 className="p-2"
                 onClick={() =>
                   updateSettings({

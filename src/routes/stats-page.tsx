@@ -43,7 +43,7 @@ export default function StatsPage() {
       className="flex-grow"
     >
       <Container as="div" className="flex flex-col gap-3">
-        <div className="relative">
+        <div>
           <H2>Your Contributions</H2>
           <HeatCalendar
             pallet={currentPallet}

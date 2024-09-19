@@ -52,6 +52,7 @@ export function HeatCalendar({
         legendCellSize={0}
         width={1520}
         rectSize={1520 / (48 + 10.2)}
+        height={220}
         className="mx-auto"
         panelColors={shadesRecord}
         startDate={new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)}

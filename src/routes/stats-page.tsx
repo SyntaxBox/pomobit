@@ -43,10 +43,11 @@ export default function StatsPage() {
       className="flex-grow"
     >
       <Container as="div" className="flex flex-col gap-3">
-        <div>
+        <div className="relative">
           <H2>Your Contributions</H2>
           <HeatCalendar
             pallet={currentPallet}
+            tooltipPrefix="Work Shifts"
             data={Object.entries(data).map(([date, sessions]) => ({
               date,
               count: sessions.filter((session) => session.type === "WORK")

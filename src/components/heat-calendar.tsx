@@ -32,8 +32,8 @@ export function HeatCalendar({
     setTooltip({
       visible: true,
       data,
-      x: rect.left + window.scrollX + rect.width / 2 - 100,
-      y: rect.top + window.scrollY - 50,
+      x: rect.left + window.scrollX + rect.width / 2 - 200,
+      y: rect.top + window.scrollY - 40,
     });
   };
 
@@ -44,13 +44,14 @@ export function HeatCalendar({
   const shadesRecord = Object.fromEntries(
     ColorUtils.generateShades(pallet.original, 10).map((c, i) => [3 * i, c]),
   );
+
   return (
     <div className="relative">
       <HeatMap
         value={data}
         legendCellSize={0}
-        width={1200}
-        rectSize={20}
+        width={1520}
+        rectSize={1520 / (48 + 10.2)}
         className="mx-auto"
         panelColors={shadesRecord}
         startDate={new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)}

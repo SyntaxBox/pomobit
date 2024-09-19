@@ -1,29 +1,34 @@
-import React from "react";
-import ChartBase, { SessionData } from "./base";
+import ChartBase, { ChartType, SessionData } from "./base";
 import { Charts } from "./charts";
 
 interface ChartProps {
   data: SessionData;
 }
 
-interface SessionChartData {
+interface TimeChartData {
   date: string;
   work: number;
   break: number;
 }
 
-export const SessionsChart: React.FC<ChartProps> = ({ data }) => {
+export const TimeChart: React.FC<ChartProps> = ({ data }) => {
   const renderChart = (
     filteredData: SessionData,
-    chartType: string,
+    chartType: ChartType,
     workFill: string,
     breakFill: string,
   ) => {
-    const chartData: SessionChartData[] = Object.entries(filteredData).map(
+    const chartData: TimeChartData[] = Object.entries(filteredData).map(
       ([date, sessions]) => ({
         date,
-        work: sessions.filter((s) => s.type === "WORK").length,
-        break: sessions.filter((s) => s.type === "BREAK").length,
+        work:
+          sessions
+            .filter((s) => s.type === "WORK")
+            .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
+        break:
+          sessions
+            .filter((s) => s.type === "BREAK")
+            .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
       }),
     );
 

@@ -1,32 +1,40 @@
 import React, { useState } from "react";
-import { ResponsiveContainer } from "recharts";
+import { Select, Switch } from "../../ui";
+import { useUI } from "../../hooks";
+import { Session } from "../../stores";
 
-interface Session {
-  start: number;
-  end: number;
-  type: "BREAK" | "WORK";
-}
+export type SessionData = Record<string, Session[]>;
+export type ChartType = "bar" | "area";
 
-type SessionData = Record<string, Session[]>;
-
-interface ChartBaseProps {
+export interface ChartBaseProps {
   data: SessionData;
-  renderChart: (filteredData: SessionData) => React.ReactNode;
+  renderChart: (
+    filteredData: SessionData,
+    chartType: ChartType,
+    workFill: string,
+    breakFill: string,
+  ) => React.ReactElement;
 }
 
 const timeSpans: Record<string, number> = {
   "1 week": 7,
   "2 weeks": 14,
   "3 weeks": 21,
-  "4 weeks": 28,
   "1 month": 30,
   "3 months": 90,
   "6 months": 180,
   "1 year": 365,
 };
 
+const chartTypes: Record<string, ChartType> = {
+  "Bar Chart": "bar",
+  "Area Chart": "area",
+};
+
 const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
+  const { workPallet, breakPallet, currentPallet } = useUI();
   const [timeSpan, setTimeSpan] = useState<string>("1 month");
+  const [chartType, setChartType] = useState<string>("Bar Chart");
   const [showWork, setShowWork] = useState<boolean>(true);
   const [showBreak, setShowBreak] = useState<boolean>(true);
 
@@ -51,34 +59,53 @@ const ChartBase: React.FC<ChartBaseProps> = ({ data, renderChart }) => {
 
   return (
     <div className="chart-container">
-      <div className="controls">
-        <select value={timeSpan} onChange={(e) => setTimeSpan(e.target.value)}>
-          {Object.keys(timeSpans).map((span) => (
-            <option key={span} value={span}>
-              {span}
-            </option>
-          ))}
-        </select>
-        <label>
-          <input
-            type="checkbox"
-            checked={showWork}
+      <div className="flex gap-3 items-center">
+        <Select
+          pallet={currentPallet}
+          options={timeSpans}
+          value={timeSpan}
+          onChange={(e) => setTimeSpan(e[0])}
+        />
+
+        <Select
+          pallet={currentPallet}
+          options={chartTypes}
+          value={chartType}
+          onChange={(e) => setChartType(e[0])}
+        />
+        <label
+          className="flex items-center justify-center gap-1 w-fit"
+          style={{
+            color: breakPallet.text1,
+          }}
+        >
+          <Switch
+            value={showWork}
+            pallet={workPallet}
             onChange={() => setShowWork(!showWork)}
           />
           Show Work
         </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={showBreak}
+        <label
+          className="flex items-center justify-center gap-1 w-fit"
+          style={{
+            color: breakPallet.text1,
+          }}
+        >
+          <Switch
+            pallet={breakPallet}
+            value={showBreak}
             onChange={() => setShowBreak(!showBreak)}
           />
           Show Break
         </label>
       </div>
-      <ResponsiveContainer width="100%" height={400}>
-        {renderChart(filteredData)}
-      </ResponsiveContainer>
+      {renderChart(
+        filteredData,
+        chartTypes[chartType],
+        workPallet.primary1,
+        breakPallet.primary1,
+      )}
     </div>
   );
 };

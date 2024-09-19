@@ -1,12 +1,6 @@
 import { Container, H2 } from "../ui";
 import { useUI } from "../hooks";
-import {
-  HeatCalendar,
-  SessionsChart,
-  TimeChart,
-  CumulativeTimeChart,
-  SessionDurationScatterChart,
-} from "../components";
+import { HeatCalendar, SessionsChart, TimeChart } from "../components";
 import { Session } from "../stores";
 export default function StatsPage() {
   const { currentPallet } = useUI();
@@ -49,26 +43,26 @@ export default function StatsPage() {
       }}
       className="flex-grow"
     >
-      <Container as="div">
-        <H2>Your Contributions</H2>
-        <HeatCalendar
-          pallet={currentPallet}
-          data={Object.entries(data).map(([date, sessions]) => ({
-            date,
-            count: sessions.filter((session) => session.type === "WORK").length,
-          }))}
-        />
-        <h2>Sessions Chart</h2>
-        <SessionsChart data={data} />
-
-        <h2>Time Chart</h2>
-        <TimeChart data={data} />
-
-        <h2>Cumulative Time Chart</h2>
-        <CumulativeTimeChart data={data} />
-
-        <h2>Session Duration Scatter Chart</h2>
-        <SessionDurationScatterChart data={data} />
+      <Container as="div" className="flex flex-col gap-3">
+        <div>
+          <H2>Your Contributions</H2>
+          <HeatCalendar
+            pallet={currentPallet}
+            data={Object.entries(data).map(([date, sessions]) => ({
+              date,
+              count: sessions.filter((session) => session.type === "WORK")
+                .length,
+            }))}
+          />
+        </div>
+        <div>
+          <H2>Sessions Chart</H2>
+          <SessionsChart data={data} />
+        </div>
+        <div>
+          <H2>Time Chart</H2>
+          <TimeChart data={data} />
+        </div>
       </Container>
     </section>
   );

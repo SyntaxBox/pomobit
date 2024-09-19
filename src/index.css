@@ -12,6 +12,21 @@ body {
   font-family: Rubik;
 }
 
+/* The entire scrollbar */
+::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+/* The track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+  background: transparent; /* Color of the scrollbar track */
+}
+
+/* The draggable part of the scrollbar */
+::-webkit-scrollbar-thumb {
+  border-radius: 3px; /* Rounded corners for the thumb */
+}
+
 .child-focus-scale:focus .parent-focus-scale {
   transform: translate(-50%, -50%) scale(1.1);
 }

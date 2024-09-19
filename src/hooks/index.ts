@@ -1,4 +1,5 @@
 export * from "./useLocalStorage";
+export * from "./useScrollbarColors";
 export * from "./useEventCallback";
 export * from "./usePromodoro";
 export * from "./useUI";

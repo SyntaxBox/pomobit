@@ -33,6 +33,8 @@ export const SessionsChart: React.FC<ChartProps> = ({ data }) => {
     if (chartType === "bar") {
       return (
         <Charts.Bar
+          workName="Work Sessions"
+          breakName="Break Sessions"
           data={chartData}
           workFill={workFill}
           breakFill={breakFill}
@@ -40,7 +42,13 @@ export const SessionsChart: React.FC<ChartProps> = ({ data }) => {
       );
     }
     return (
-      <Charts.Area data={chartData} workFill={workFill} breakFill={breakFill} />
+      <Charts.Area
+        data={chartData}
+        workFill={workFill}
+        breakFill={breakFill}
+        workName="Work Sessions"
+        breakName="Break Sessions"
+      />
     );
   };
 

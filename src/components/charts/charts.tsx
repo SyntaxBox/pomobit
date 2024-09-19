@@ -14,10 +14,14 @@ function Area({
   data,
   workFill,
   breakFill,
+  workName,
+  breakName,
 }: {
   data: unknown[];
   workFill: string;
   breakFill: string;
+  workName: string;
+  breakName: string;
 }) {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -43,7 +47,7 @@ function Area({
           stroke={workFill}
           fillOpacity={1}
           fill="url(#workGradient)"
-          name="Cumulative Work Time (hours)"
+          name={workName}
         />
         <ChartArea
           type="monotone"
@@ -52,7 +56,7 @@ function Area({
           stroke={breakFill}
           fillOpacity={1}
           fill="url(#breakGradient)"
-          name="Cumulative Break Time (hours)"
+          name={breakName}
         />
       </AreaChart>
     </ResponsiveContainer>
@@ -63,10 +67,14 @@ function Bar({
   data,
   workFill,
   breakFill,
+  workName,
+  breakName,
 }: {
   data: unknown[];
   workFill: string;
   breakFill: string;
+  breakName: string;
+  workName: string;
 }) {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -75,8 +83,8 @@ function Bar({
         <YAxis />
         <Tooltip />
         <Legend />
-        <ChartBar dataKey="work" fill={workFill} name="Work Sessions" />
-        <ChartBar dataKey="break" fill={breakFill} name="Break Sessions" />
+        <ChartBar dataKey="work" fill={workFill} name={workName} />
+        <ChartBar dataKey="break" fill={breakFill} name={breakName} />
       </BarChart>
     </ResponsiveContainer>
   );

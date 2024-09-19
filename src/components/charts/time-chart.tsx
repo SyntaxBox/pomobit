@@ -8,8 +8,8 @@ interface ChartProps {
 
 interface TimeChartData {
   date: string;
-  work: number;
-  break: number;
+  work: string;
+  break: string;
 }
 
 export const TimeChart: React.FC<ChartProps> = ({ data }) => {
@@ -21,16 +21,21 @@ export const TimeChart: React.FC<ChartProps> = ({ data }) => {
   ) => {
     const chartData: TimeChartData[] = Object.entries(filteredData).map(
       ([date, sessions]) => {
+        const workMinutes = Math.round(
+          sessions
+            .filter((s) => s.type === "WORK")
+            .reduce((sum, s) => sum + (s.end - s.start), 0) / 60000,
+        );
+        const breakMinutes = Math.round(
+          sessions
+            .filter((s) => s.type === "BREAK")
+            .reduce((sum, s) => sum + (s.end - s.start), 0) / 60000,
+        );
+
         return {
           date: TimeUtils.simpleFormatDate(date),
-          work:
-            sessions
-              .filter((s) => s.type === "WORK")
-              .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
-          break:
-            sessions
-              .filter((s) => s.type === "BREAK")
-              .reduce((sum, s) => sum + (s.end - s.start), 0) / 3600000,
+          work: workMinutes,
+          break: breakMinutes,
         };
       },
     );
@@ -39,13 +44,21 @@ export const TimeChart: React.FC<ChartProps> = ({ data }) => {
       return (
         <Charts.Bar
           data={chartData}
+          workName="Work Time (minutes)"
+          breakName="Work Time (minutes)"
           workFill={workFill}
           breakFill={breakFill}
         />
       );
     }
     return (
-      <Charts.Area data={chartData} workFill={workFill} breakFill={breakFill} />
+      <Charts.Area
+        data={chartData}
+        workFill={workFill}
+        breakFill={breakFill}
+        workName="Work Time (minutes)"
+        breakName="Work Time (minutes)"
+      />
     );
   };
 

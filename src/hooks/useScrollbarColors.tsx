@@ -1,22 +1,24 @@
 import { useEffect } from "react";
 import { useUI } from "./useUI";
+import { ColorUtils } from "../lib/utils";
 
 export function useScrollbarColors() {
   const { currentPallet } = useUI();
+  const [, , , bg1, bg2] = ColorUtils.generateShades(currentPallet.original, 8);
   useEffect(() => {
     const style = `
             ::-webkit-scrollbar {
                 width: 6px;
             }
             ::-webkit-scrollbar-track {
-                background: ${currentPallet.background + "90"};
+                background: ${currentPallet.background + "b2"};
             }
             ::-webkit-scrollbar-thumb {
-                background: ${currentPallet.primary1 + "70"};
+                background: ${bg1};
                 border-radius: 3px;
             }
             ::-webkit-scrollbar-thumb:hover {
-                background: ${currentPallet.primary1};
+                background: ${bg2};
             }
         `;
 

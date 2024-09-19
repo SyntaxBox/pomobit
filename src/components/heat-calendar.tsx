@@ -1,57 +1,54 @@
-import { useState, MouseEvent } from "react";
+import { useState, useRef, useEffect } from "react";
 import HeatMap, { HeatMapValue } from "@uiw/react-heat-map";
-import { ColorUtils, TimeUtils } from "../lib/utils";
-
-// Define the structure of the tooltip data
-interface TooltipState {
-  visible: boolean;
-  data: HeatMapValue | null;
-  x: number;
-  y: number;
-}
+import { cn, ColorUtils, TimeUtils } from "../lib/utils";
+import { Tooltip } from "react-tooltip"; // Import react-tooltip
 
 export function HeatCalendar({
   pallet,
   data,
+  tooltipPrefix,
 }: {
   pallet: ColorUtils.ColorPallet;
+  tooltipPrefix?: string;
   data: HeatMapValue[];
 }) {
-  const [tooltip, setTooltip] = useState<TooltipState>({
-    visible: false,
-    data: null,
-    x: 0,
-    y: 0,
-  });
+  const divRef = useRef<HTMLDivElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
 
-  const handleMouseEnter = (
-    e: MouseEvent<SVGRectElement>,
-    data: HeatMapValue,
-  ) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setTooltip({
-      visible: true,
-      data,
-      x: rect.left + window.scrollX + rect.width / 2 - 200,
-      y: rect.top + window.scrollY - 40,
-    });
-  };
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (
+        divRef.current &&
+        divRef.current?.scrollWidth > divRef.current?.clientWidth
+      ) {
+        setIsOverflowing(true);
+      } else {
+        setIsOverflowing(false);
+      }
+    };
 
-  const handleMouseLeave = () => {
-    setTooltip({ visible: false, data: null, x: 0, y: 0 });
-  };
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow); // Check again on window resize
+
+    return () => {
+      window.removeEventListener("resize", checkOverflow);
+    };
+  }, []);
 
   const shadesRecord = Object.fromEntries(
     ColorUtils.generateShades(pallet.original, 10).map((c, i) => [3 * i, c]),
   );
 
   return (
-    <div className="relative">
+    <div
+      className={cn(isOverflowing ? "overflow-x-scroll" : "overflow-x-auto")}
+      ref={divRef}
+    >
       <HeatMap
         value={data}
         legendCellSize={0}
-        width={1520}
-        rectSize={1520 / (48 + 10.2)}
+        width={1500}
+        rectSize={1500 / (48 + 10.2)}
         height={220}
         className="mx-auto"
         panelColors={shadesRecord}
@@ -61,36 +58,30 @@ export function HeatCalendar({
           rx: 5,
         }}
         rectRender={(props, data) => {
+          const tooltipContent = `${TimeUtils.simpleFormatDate(data.date)}: ${
+            data?.count || 0
+          } ${tooltipPrefix || ""}`;
+
           return (
             <rect
               {...props}
-              onMouseEnter={(e) => handleMouseEnter(e, data)}
-              onMouseLeave={handleMouseLeave}
+              data-tooltip-id="heatmap-tooltip" // Associate with tooltip ID
+              data-tooltip-content={tooltipContent} // Tooltip content
               style={{ cursor: "pointer" }}
             />
           );
         }}
       />
-      {tooltip.visible && (
-        <div
-          style={{
-            position: "absolute",
-            left: tooltip.x,
-            top: tooltip.y,
-            backgroundColor: pallet.background2,
-            color: pallet.text1,
-            padding: "5px 10px",
-            borderRadius: "4px",
-            fontSize: "12px",
-            pointerEvents: "none",
-            transform: "translate(-50%, -100%)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {tooltip.data && TimeUtils.simpleFormatDate(tooltip.data.date)}:{" "}
-          {tooltip.data?.count || 0} Work Shifts
-        </div>
-      )}
+
+      {/* Tooltip Component */}
+      <Tooltip
+        id="heatmap-tooltip"
+        place="top"
+        style={{
+          backgroundColor: pallet.background2,
+          color: pallet.text1,
+        }}
+      />
     </div>
   );
 }

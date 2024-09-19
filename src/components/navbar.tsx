@@ -25,12 +25,7 @@ export function Navbar() {
     );
   }
   return (
-    <nav
-      style={{
-        background: currentPallet.background + "90",
-      }}
-      className="h-14 shadow-lg shadow-black/5 z-50 backdrop-blur-sm sticky top-0 left-0"
-    >
+    <nav className="h-14 shadow-lg shadow-black/5 z-50 backdrop-blur-sm sticky top-0 left-0">
       <Container as="div" className="flex justify-between py-2">
         <Link to="/">
           <img src="/icon.svg" alt="logo icon" className="w-24 h-24 -mt-6" />

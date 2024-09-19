@@ -24,7 +24,6 @@ export default function SettingsPage() {
   return (
     <section
       style={{
-        background: currentPallet.background + "b2",
         color: currentPallet.text1,
       }}
       className="flex-grow"

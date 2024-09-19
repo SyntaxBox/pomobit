@@ -1,5 +1,5 @@
 import React from "react";
-import ChartBase, { SessionData } from "./base";
+import { ChartBase, SessionData } from "./base";
 import { Charts } from "./charts";
 import { TimeUtils } from "../../lib/utils";
 

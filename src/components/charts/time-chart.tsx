@@ -1,5 +1,5 @@
 import { TimeUtils } from "../../lib/utils";
-import ChartBase, { ChartType, SessionData } from "./base";
+import { ChartBase, ChartType, SessionData } from "./base";
 import { Charts } from "./charts";
 
 interface ChartProps {

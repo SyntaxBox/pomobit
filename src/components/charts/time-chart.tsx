@@ -8,8 +8,8 @@ interface ChartProps {
 
 interface TimeChartData {
   date: string;
-  work: string;
-  break: string;
+  work: number;
+  break: number;
 }
 
 export const TimeChart: React.FC<ChartProps> = ({ data }) => {

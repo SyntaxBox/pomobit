@@ -1,4 +1,3 @@
-import React from "react";
 import { ColorUtils } from "../lib/utils";
 
 export function Clock({

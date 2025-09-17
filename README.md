@@ -12,13 +12,6 @@ Pomobit is a modern web-based productivity application that leverages the Pomodo
 - User authentication and profile management
 - Notifications and sound alerts for session transitions
 
-## Technologies Used
-
-- React.js (frontend)
-- Node.js & Express (backend)
-- MongoDB (database)
-- Styled Components & CSS Modules
-- JWT Authentication
 
 ## Installation
 
